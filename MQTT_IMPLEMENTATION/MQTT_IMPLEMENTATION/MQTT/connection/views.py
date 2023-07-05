@@ -3632,6 +3632,10 @@ class rwpsettingViewset(viewsets.ModelViewSet):
             # rwp_setting.objects.all().update(device_id=did)
         except Exception as e:
             print("Error",e)
+            dd=dateandtime()
+            e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} Hpp has a fault-{e}"
+            erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='hpp',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+            erro.save()
         return super().dispatch(request)    
     def perform_create(self, serializer):
         try:
@@ -3699,7 +3703,10 @@ class hppstateViewset(viewsets.ModelViewSet):
                 
 
             except Exception as e:
-                pass    
+                dd=dateandtime()
+                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} Hpp has a fault-{e}"
+                erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='hpp',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                erro.save()   
             return super().dispatch(request)    
         def perform_create(self, serializer):
             try:
@@ -3741,7 +3748,10 @@ class hppsettingViewset(viewsets.ModelViewSet):
                     if key in data_dict:
                         del data_dict[key]
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict))
-                
+                dd=dateandtime()
+                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} Hpp settings change has been requested over load current:300,span:2800,dry run current:30{e}"
+                erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='hpp',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                erro.save()
 
             except Exception as e:
                 pass    
@@ -8228,6 +8238,13 @@ def on_message(client, userdata, msg):
                         # repo_latestobj.save()  
                         ds=disp_tap1.objects.create(device_id=device_id,message_type=msg_type,p1=p1,p2=p2,p3=p3,p4=p4,year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                         ds.save()
+                        if msg_type == 'updset':
+                            dd=dateandtime()
+                            e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tap1 settings has been updated pulse1:{p1} pulse2:{p2} pulse3:{p2} pulse4:{p2}"
+                            erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='tap1',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                            erro.save()
+                        else:
+                            pass
                         #hourly
                         yrdata=disp_tap1.objects.filter(year=dd[0],month=dd[1],day=dd[2],hour=dd[3],device_id=device_id)
                         count=0
@@ -8411,6 +8428,13 @@ def on_message(client, userdata, msg):
                         # repo_latestobj.save()
                         ds=disp_tap2.objects.create(device_id=device_id,message_type=msg_type,p1=p1,p2=p2,p3=p3,p4=p4,year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                         ds.save()
+                        if msg_type == 'updset':
+                            dd=dateandtime()
+                            e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tap3 settings has been updated pulse1:{p1} pulse2:{p2} pulse3:{p2} pulse4:{p2}"
+                            erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='tap3',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                            erro.save()
+                        else:
+                            pass
                         #hourly
                         yrdata=disp_tap2.objects.filter(year=dd[0],month=dd[1],day=dd[2],hour=dd[3],device_id=device_id)
                         count=0
@@ -8593,6 +8617,13 @@ def on_message(client, userdata, msg):
                         # repo_latestobj.save()   
                         ds=disp_tap3.objects.create(device_id=device_id,message_type=msg_type,p1=p1,p2=p2,p3=p3,p4=p4,year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                         ds.save()
+                        if msg_type == 'updset':
+                            dd=dateandtime()
+                            e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tap3 settings has been updated pulse1:{p1} pulse2:{p2} pulse3:{p2} pulse4:{p2}"
+                            erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='tap3',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                            erro.save()
+                        else:
+                            pass
                         #hourly
                         yrdata=disp_tap3.objects.filter(year=dd[0],month=dd[1],day=dd[2],hour=dd[3],device_id=device_id)
                         count=0
@@ -8776,6 +8807,13 @@ def on_message(client, userdata, msg):
                         
                         ds1=disp_tap4.objects.create(device_id=device_id,message_type=msg_type,p1=p1,p2=p2,p3=p3,p4=p4,year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                         # ds1.save()
+                        if msg_type == 'updset':
+                            dd=dateandtime()
+                            e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tap4 settings has been updated pulse1:{p1} pulse2:{p2} pulse3:{p2} pulse4:{p2}"
+                            erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='tap4',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                            erro.save()
+                        else:
+                            pass
                         
                         #hourly
                         
@@ -8962,6 +9000,16 @@ def on_message(client, userdata, msg):
                         # repo_latestobj.save()
                         ds=disp_flowsen1.objects.create(device_id=device_id,message_type=msg_type,fr=fr,year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                         ds.save()
+                        if msg_type == 'updset':
+                            dd=dateandtime()
+                            e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} flowsen1 settings has been updated flow rate:{fr}"
+                            erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='flowsen1',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                            erro.save()
+                        else:
+                            dd=dateandtime()
+                            e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} flowsen1 status has been updated flow rate:{fr}"
+                            erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='flowsen1',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                            erro.save()
                         #hourly
                         yrdata=disp_flowsen1.objects.filter(year=dd[0],month=dd[1],day=dd[2],hour=dd[3],device_id=device_id)
                         count=0
@@ -9098,6 +9146,16 @@ def on_message(client, userdata, msg):
                         # repo_latestobj.save()
                         ds=disp_flowsen2.objects.create(device_id=device_id,message_type=msg_type,fr=fr,year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                         ds.save()
+                        if msg_type == 'updset':
+                            dd=dateandtime()
+                            e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} flowsen2 settings has been updated flow rate:{fr}"
+                            erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='flowsen2',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                            erro.save()
+                        else:
+                            dd=dateandtime()
+                            e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} flowsen2 status has been updated flow rate:{fr}"
+                            erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='flowsen2',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                            erro.save()
                         #hourly
                         yrdata=disp_flowsen2.objects.filter(year=dd[0],month=dd[1],day=dd[2],hour=dd[3],device_id=device_id)
                         count=0
@@ -9234,6 +9292,16 @@ def on_message(client, userdata, msg):
                         # repo_latestobj.save()
                         ds=disp_flowsen3.objects.create(device_id=device_id,message_type=msg_type,fr=fr,year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                         ds.save()
+                        if msg_type == 'updset':
+                            dd=dateandtime()
+                            e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} flowsen3 settings has been updated flow rate:{fr}"
+                            erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='flowsen3',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                            erro.save()
+                        else:
+                            dd=dateandtime()
+                            e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} flowsen3 status has been updated flow rate:{fr}"
+                            erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='flowsen3',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                            erro.save()
                         #hourly
                         yrdata=disp_flowsen3.objects.filter(year=dd[0],month=dd[1],day=dd[2],hour=dd[3],device_id=device_id)
                         count=0
@@ -9370,6 +9438,16 @@ def on_message(client, userdata, msg):
                         # repo_latestobj.save()
                         ds=disp_flowsen4.objects.create(device_id=device_id,message_type=msg_type,fr=fr,year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                         ds.save()
+                        if msg_type == 'updset':
+                            dd=dateandtime()
+                            e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} flowsen4 settings has been updated flow rate:{fr}"
+                            erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='flowsen4',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                            erro.save()
+                        else:
+                            dd=dateandtime()
+                            e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} flowsen4 status has been updated flow rate:{fr}"
+                            erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='flowsen4',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                            erro.save()
                         #hourly
                         yrdata=disp_flowsen4.objects.filter(year=dd[0],month=dd[1],day=dd[2],hour=dd[3],device_id=device_id)
                         count=0
