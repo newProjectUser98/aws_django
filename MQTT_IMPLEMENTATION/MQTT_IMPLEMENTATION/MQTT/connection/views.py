@@ -3741,7 +3741,10 @@ class hppsettingViewset(viewsets.ModelViewSet):
                     if key in data_dict:
                         del data_dict[key]
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict))
-                
+                dd=dateandtime()
+                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} Hpp settings change has been requested over load current:{value_list[3]},span:{value_list[4]},dry run current:{value_list[5]}"
+                erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='hpp',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                erro.save()
 
             except Exception as e:
                 pass    
@@ -3784,6 +3787,7 @@ class cndsettingViewset(viewsets.ModelViewSet):
                     if key in data_dict:
                         del data_dict[key]
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict))
+                
             except Exception as e:
                 pass
             return super().dispatch(request)    
@@ -3966,7 +3970,10 @@ class panelsettingViewset(viewsets.ModelViewSet):
                     if key in data_dict:
                         del data_dict[key]
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict))
-                
+                dd=dateandtime()
+                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} panel settings change has been requested mode:{value_list[3]},under voltage:{value_list[6]},over voltage:{value_list[7]},span:{value_list[8]},no.of multiport valve:{value_list[4]},sensor type:{value_list[5]},service time:{value_list[9]},backwash time:{value_list[10]},rinse time:{value_list[11]},"
+                erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='panel',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                erro.save()    
 
             except Exception as e:
                 pass    
@@ -4011,7 +4018,10 @@ class atmsettingViewset(viewsets.ModelViewSet):
                     if key in data_dict:
                         del data_dict[key]
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict))
-                
+                dd=dateandtime()
+                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} atm settings change has been requested over no. Of  tap:{value_list[3]},no. Of volume:{value_list[4]},volume1:{value_list[5]},volume2:{value_list[6]},volume3:{value_list[7]},volume4:{value_list[8]},rate1:{value_list[9]},rate2:{value_list[10]},rate3:{value_list[11]},rate4:{value_list[12]}"
+                erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='atm',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                erro.save() 
 
             except Exception as e:
                 pass    
@@ -4147,7 +4157,10 @@ class ampv1stateViewset(viewsets.ModelViewSet):
                     if key in data_dict:
                         del data_dict[key]
                 mqttc.publish(f'wc/{did}/chgsta/{cmpname}',str(data_dict))
-                
+                dd=dateandtime()
+                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv1 status change has been requested position:{value_list[3]}"
+                erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='ampv1',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                erro.save()
 
             except Exception as e:
                 pass    
@@ -4193,7 +4206,10 @@ class ampv1settingViewset(viewsets.ModelViewSet):
                     if key in data_dict:
                         del data_dict[key]
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict))
-                
+                dd=dateandtime()
+                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv1 settings change has been requested service time:{value_list[8]},backwash time:{value_list[9]},rins time:{value_list[10]},motor on delay time:{value_list[11]},output1:{value_list[12]},output2:{value_list[13]},output3:{value_list[14]},input1:{value_list[4]},input2:{value_list[5]},input3:{value_list[6]},pressure switch input:{value_list[7]},sensor type:{value_list[3]}"
+                erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='ampv1',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                erro.save()
 
             except Exception as e:
                 pass    
@@ -4238,8 +4254,10 @@ class ampv2stateViewset(viewsets.ModelViewSet):
                     if key in data_dict:
                         del data_dict[key]
                 mqttc.publish(f'wc/{did}/chgsta/{cmpname}',str(data_dict))
-                
-
+                dd=dateandtime()
+                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv2 status change has been requested position:{value_list[3]}"
+                erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='ampv2',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                erro.save()
             except Exception as e:
                 pass    
             return super().dispatch(request)    
@@ -4283,8 +4301,10 @@ class ampv2settingViewset(viewsets.ModelViewSet):
                     if key in data_dict:
                         del data_dict[key]
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict))
-                
-
+                dd=dateandtime()
+                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv2 settings change has been requested service time:{value_list[8]},backwash time:{value_list[9]},rins time:{value_list[10]},motor on delay time:{value_list[11]},output1:{value_list[12]},output2:{value_list[13]},output3:{value_list[14]},input1:{value_list[4]},input2:{value_list[5]},input3:{value_list[6]},pressure switch input:{value_list[7]},sensor type:{value_list[3]}"
+                erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='ampv2',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                erro.save()
             except Exception as e:
                 pass    
             return super().dispatch(request)    
