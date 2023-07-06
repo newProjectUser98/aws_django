@@ -6119,7 +6119,7 @@ def on_message(client, userdata, msg):
                     ds.save()
                     if msg_type == 'updset':
                         dd=dateandtime()
-                        e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv1 settings has been updated service time:{srt} backwash time:{bkt} rinse time:{rst} motor on delay time:{mot}sensor type:{stp} output1:{op1}output2:{op2}output3:{op3}input1:{ip1}input2:{ip2}input3:{ip3}pressure switch input:{psi}
+                        e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv1 settings has been updated service time:{srt} backwash time:{bkt} rinse time:{rst} motor on delay time:{mot}sensor type:{stp} output1:{op1}output2:{op2}output3:{op3}input1:{ip1}input2:{ip2}input3:{ip3}pressure switch input:{psi}"
                         erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='ampv1',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                         erro.save()
                     else:
@@ -6366,7 +6366,7 @@ def on_message(client, userdata, msg):
                     ds.save()
                     if msg_type == 'updset':
                         dd=dateandtime()
-                        e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv2 settings has been updated service time:{srt} backwash time:{bkt} rinse time:{rst} motor on delay time:{mot}sensor type:{stp} output1:{op1}output2:{op2}output3:{op3}input1:{ip1}input2:{ip2}input3:{ip3}pressure switch input:{psi}
+                        e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv2 settings has been updated service time:{srt} backwash time:{bkt} rinse time:{rst} motor on delay time:{mot}sensor type:{stp} output1:{op1}output2:{op2}output3:{op3}input1:{ip1}input2:{ip2}input3:{ip3}pressure switch input:{psi}"
                         erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='ampv2',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                         erro.save()
                     else:
@@ -6609,7 +6609,7 @@ def on_message(client, userdata, msg):
                     ds.save()
                     if msg_type == 'updset':
                         dd=dateandtime()
-                        e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv3 settings has been updated service time:{srt} backwash time:{bkt} rinse time:{rst} motor on delay time:{mot}sensor type:{stp} output1:{op1}output2:{op2}output3:{op3}input1:{ip1}input2:{ip2}input3:{ip3}pressure switch input:{psi}
+                        e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv3 settings has been updated service time:{srt} backwash time:{bkt} rinse time:{rst} motor on delay time:{mot}sensor type:{stp} output1:{op1}output2:{op2}output3:{op3}input1:{ip1}input2:{ip2}input3:{ip3}pressure switch input:{psi}"
                         erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='ampv3',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                         erro.save()
                     else:
@@ -6849,7 +6849,7 @@ def on_message(client, userdata, msg):
                     ds.save()
                     if msg_type == 'updset':
                         dd=dateandtime()
-                        e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv4 settings has been updated service time:{srt} backwash time:{bkt} rinse time:{rst} motor on delay time:{mot}sensor type:{stp} output1:{op1}output2:{op2}output3:{op3}input1:{ip1}input2:{ip2}input3:{ip3}pressure switch input:{psi}
+                        e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv4 settings has been updated service time:{srt} backwash time:{bkt} rinse time:{rst} motor on delay time:{mot}sensor type:{stp} output1:{op1}output2:{op2}output3:{op3}input1:{ip1}input2:{ip2}input3:{ip3}pressure switch input:{psi}"
                         erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='ampv4',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                         erro.save()
                     else:
@@ -7083,7 +7083,7 @@ def on_message(client, userdata, msg):
                     ds.save()
                     if msg_type == 'updset':
                         dd=dateandtime()
-                        e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv5 settings has been updated service time:{srt} backwash time:{bkt} rinse time:{rst} motor on delay time:{mot}sensor type:{stp} output1:{op1}output2:{op2}output3:{op3}input1:{ip1}input2:{ip2}input3:{ip3}pressure switch input:{psi}
+                        e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv5 settings has been updated service time:{srt} backwash time:{bkt} rinse time:{rst} motor on delay time:{mot}sensor type:{stp} output1:{op1}output2:{op2}output3:{op3}input1:{ip1}input2:{ip2}input3:{ip3}pressure switch input:{psi}"
                         erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='ampv5',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                         erro.save()
                     else:
@@ -7318,7 +7318,7 @@ def on_message(client, userdata, msg):
                     ds.save()
                     if msg_type == 'updset':
                         dd=dateandtime()
-                        e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} atm settings has been updated no. Of  tap:{ntp} no. Of volume:{nov}volume1:{vl1}volume2:{vl2}volume3:{vl3}volume4:{vl4}rate1:{re1}rate2:{re2}rate3:{re3}rate4:{re4}
+                        e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} atm settings has been updated no. Of  tap:{ntp} no. Of volume:{nov}volume1:{vl1}volume2:{vl2}volume3:{vl3}volume4:{vl4}rate1:{re1}rate2:{re2}rate3:{re3}rate4:{re4}"
                         erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='atm',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                         erro.save()
                     else:
