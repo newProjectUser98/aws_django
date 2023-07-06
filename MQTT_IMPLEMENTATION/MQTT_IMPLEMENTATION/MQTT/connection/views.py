@@ -4926,6 +4926,16 @@ def on_message(client, userdata, msg):
                     
                     ds=treat_cnd_sen.objects.create(device_id=device_id,message_type=msg_type,cnd=cnd,spn=spn,tsp=tsp,asp=asp,year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                     ds.save()
+                    if msg_type == 'updset':
+                        dd=dateandtime()
+                        e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} cnd_sen settings has been updated span:{spn} trip_setpoint:{tsp} alert_setpoint:{asp}"
+                        erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='cnd_sen',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                        erro.save()
+                    else:
+                        dd=dateandtime()
+                        e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} cnd_sen status has been updated conductivity:{cnd}"
+                        erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='cnd_sen',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                        erro.save()
                     # Hour
                     yrdata=treat_cnd_sen.objects.filter(year=dd[0],month=dd[1],day=dd[2],hour=dd[3],device_id=device_id)
                     count=0
@@ -5162,13 +5172,13 @@ def on_message(client, userdata, msg):
                     ds.save()
                     if msg_type == 'updset':
                         dd=dateandtime()
-                        e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} cnd_sen settings has been updated span:{spn} trip_setpoint:{tsp} alert_setpoint:{asp}"
-                        erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='cnd_sen',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                        e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tds_sen settings has been updated span:{spn} trip_setpoint:{tsp} alert_setpoint:{asp}"
+                        erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='tds_sen',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                         erro.save()
                     else:
                         dd=dateandtime()
-                        e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} cnd_sen status has been updated conductivity:{cnd}"
-                        erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='cnd_sen',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                        e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tds_sen status has been updated conductivity:{tds}"
+                        erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='tds_sen',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                         erro.save()
                     # Hour
                     yrdata=treat_tds_sen.objects.filter(year=dd[0],month=dd[1],day=dd[2],hour=dd[3],device_id=device_id)
@@ -5399,7 +5409,7 @@ def on_message(client, userdata, msg):
                     else:
                         dd=dateandtime()
                         e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} rwp status has been updated status:{sts},current:{crt}"
-                        erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='cnd_sen',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                        erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='rwp',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                         erro.save()
                     # hour
                     yrdata=treat_rwp.objects.filter(year=dd[0],month=dd[1],day=dd[2],hour=dd[3],device_id=device_id)
@@ -5806,8 +5816,10 @@ def on_message(client, userdata, msg):
                 
                 # EchoConsumer.websocket_receive('event','event')  
             try:
+                print("00000000000000000000000000")
                 if 'panel'==components:
                     # com=cl
+                    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@")
                     if device_id not in device_idlist:
                         repo_latestdata.objects.create(device_id=device_id,message_type=msg_type,panel=mydata1)
                     else:
@@ -5834,13 +5846,13 @@ def on_message(client, userdata, msg):
                     ds.save()
                     if msg_type == 'updset':
                         dd=dateandtime()
-                        e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} panel settings has been updated mode:{mod} under voltage:{unv} over voltage:{ovv} span:{spn}no.of multiport valve:{nmv} sensor type:{stp}service time:{srt}backwash time:{bkt}rinse time:{rst}"
-                        erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='hpp',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                        e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]}panel settings has been updated mode:{mod} under voltage:{unv} over voltage:{ovv} span:{spn} no.of multiport valve:{nmv} sensor type:{stp} service time:{srt} backwash time:{bkt} rinse time:{rst}"
+                        erro=Errors.objects.create(device_id=device_id,e_discriptions=e,service='panel',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                         erro.save()
                     else:
                         dd=dateandtime()
-                        e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} hpp status has been updated status:{sts},row water tank level:{rtl}trated water tank level:{ttl}low pressure switch:{lps}high pressure switch:{hps}dosing pump:{dgp}input voltage:{ipv}error:{err}"
-                        erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='hpp',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                        e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} panel status has been updated status:{sts},row water tank level:{rtl} trated water tank level:{ttl} low pressure switch:{lps} high pressure switch:{hps} dosing pump:{dgp} input voltage:{ipv} error:{err}"
+                        erro=Errors.objects.create(device_id=device_id,e_discriptions=e,service='panel',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                         erro.save()
                     
                     #hour
@@ -8250,12 +8262,12 @@ def on_message(client, userdata, msg):
                     if msg_type == 'updset':
                         dd=dateandtime()
                         e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} P_flowsen settings has been updated flow factor:{ff1}"
-                        erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='F_flowsen',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                        erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='P_flowsen',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                         erro.save()
                     else:
                         dd=dateandtime()
                         e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} P_flowsen status has been updated flow rate:{fr2}"
-                        erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='F_flowsen',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                        erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='P_flowsen',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                         erro.save()
                     #hourly
                     yrdata=treat_P_flowsen.objects.filter(year=dd[0],month=dd[1],day=dd[2],hour=dd[3],device_id=device_id)
