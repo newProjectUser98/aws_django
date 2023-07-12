@@ -107,11 +107,72 @@ def dateandtime():
 
 
 qs={}
-class LastRecordsView(APIView):
-    def get(self, request):
-        records = Errors.objects.order_by('-id')[:10]
-        serializer = last_ten_errors(records, many=True)
-        return Response(serializer.data)
+# class LastRecordsView(APIView):
+    # def get(self, request):
+    #     records = Errors.objects.order_by('-id')[:10]
+    #     serializer = last_ten_errors(records, many=True)
+    #     return Response(serializer.data)
+    # def post(self, request):
+    #     serializer = last_ten_errors(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=201)
+    #     return Response(serializer.errors, status=400)
+class LastRecordsView(viewsets.ModelViewSet):
+    def dispatch(self, request, *args, **kwargs):
+        my_list = [] 
+        fields_to_exclude = ['model', 'pk']
+        print(request.body,"BODY")
+        data = json.loads(request.body)
+        print(data,type(data),"last data:")
+        dinfo = device_info.objects.filter(**data)
+        did=dinfo[0].Device_id
+        print(did,"DID***")
+        last_error = Errors.objects.filter(device_id=did).order_by('-id')[:10]
+        print("qsss:",last_error)
+        
+        # if not qs_sta:
+        #     data_sta = {}
+        # else:
+        #     data_sta = serialize("json", qs_sta)
+        #     data_sta = json.loads(data_sta)
+        #     print("data_sta is:",data_sta)
+        #     for item in data_sta:
+        #         item['fields'] = {k: v for k, v in item['fields'].items() if k not in fields_to_exclude}
+        #     data_sta = json.dumps(data_sta)
+        #     data_sta = json.loads(data_sta)
+        
+        # response_data=[data_sta]
+        # # return JsonResponse(response_data, content_type="application/json")  
+        # return JsonResponse(response_data,safe=False)  
+
+
+        if not last_error:
+            last_error={}
+        else:
+            last_error = serialize("json", last_error)
+            last_error = json.loads(last_error)
+            for item in last_error:
+                item['fields'] = {k: v for k, v in item['fields'].items() if k not in fields_to_exclude}
+                my_list.append(item['fields'])
+        last_error = json.dumps(my_list)
+        last_error = json.loads(last_error)
+
+        # data_final = {'error':last_error}
+        # response_data = {
+        #     #new code
+        # 'data': data_final,  # Include the 'data' field
+        # 'status': 200,  # Add the status field
+        # 'message': "Data get successful", # Add the message field
+        # # 'error':err,
+        # }
+        # response_data=[last_error]
+        return JsonResponse(last_error, safe=False, content_type="application/json")
+      
+# class LastRecordsView(viewsets.ModelViewSet):
+#     queryset = Errors.objects.all()
+#     serializer_class = YourModelSerializer
+
 #all data from minit table
 class all_panelListAPIView(generics.ListAPIView):
     # define queryset
@@ -384,10 +445,14 @@ class updated_treat_cnd_senViewset(viewsets.ModelViewSet):
         fields_to_exclude = ['model', 'pk']
         print(request.body,"BODY")
         data = json.loads(request.body)
-        print(data,type(data),"DATA")
+        print(data,type(data),"DATA**********")
         dinfo = device_info.objects.filter(**data)
+        print(dinfo,type(dinfo),"device_info*****")
         did=dinfo[0].Device_id
-        print(dinfo,type(dinfo))
+        # print(dinfo,type(dinfo))
+        print("**!!!***1:",did)
+        # did=dinfo[0].Device_id
+        # print("**!!!***0:",did)
         qs_sta = treat_cnd_sen.objects.filter(device_id=did,message_type="updsta").order_by('-id')[:1:1]
         if not qs_sta:
             data_sta = {}

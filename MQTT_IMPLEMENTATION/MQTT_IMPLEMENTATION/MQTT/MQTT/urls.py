@@ -49,7 +49,7 @@ urlpatterns = [
     path('topicapi/all_flowsen2/', all_flowsen2ListAPIView.as_view(), name='all-flowsen2'),
     path('topicapi/all_flowsen3/', all_flowsen3ListAPIView.as_view(), name='all-flowsen3'),
     path('topicapi/all_flowsen4/', all_flowsen4ListAPIView.as_view(), name='all-flowsen4'),
-    path('api/last-records/', LastRecordsView.as_view()),
+    # path('topicapi/last-records/', LastRecordsView.as_view(),name='last-records'),
 
     # path('',include('devices.routing')),
     # path('c',views.on_message)

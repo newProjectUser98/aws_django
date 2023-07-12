@@ -44,7 +44,10 @@ class TopicSerializer(serializers.HyperlinkedModelSerializer):
 # 		fields = ('Topic',)
 
 
-
+# class YourModelSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Errors
+#         fields = '__all__'
 class TopicSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = topics
