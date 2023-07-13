@@ -3620,10 +3620,10 @@ class RwpstateViewset(viewsets.ModelViewSet):
         
             try:
                 data_dict = json.loads(request.body)
-                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","device_id"]  # Example of unwanted keys
+                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","site_name","device_id"]  # Example of unwanted keys
                 
                 value_list=list(data_dict.values())
-                
+                print("datadict:",data_dict)
                 dinfo=device_info.objects.filter(componant_name=value_list[2],unit_type=value_list[1],company_name=value_list[0])
                 for x in dinfo:
                     global deviceid
@@ -3634,7 +3634,9 @@ class RwpstateViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
-                mqttc.publish(f'wc/{did}/chgsta/{cmpname}',str(data_dict))
+                print("datadict1:",data_dict)
+                mqttc.publish(f'wc/{did}/chgsta/{cmpname}',str(data_dict).replace(' ',''))
+                print("***$$$@",str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} rwp status change has been requested status:{value_list[3]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='rwp',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
@@ -3679,7 +3681,7 @@ class rwpsettingViewset(viewsets.ModelViewSet):
         
         try:
             data_dict = json.loads(request.body)
-            unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name"]  # Example of unwanted keys
+            unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","site_name"]  # Example of unwanted keys
             print("dict data is:",data_dict)
             value_list=list(data_dict.values())
             print("value_list:",value_list)
@@ -3692,7 +3694,8 @@ class rwpsettingViewset(viewsets.ModelViewSet):
             for key in unwanted_keys:
                 if key in data_dict:
                     del data_dict[key]
-            mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict))
+            mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
+            
             print("data send to hivemq")
                 
             
@@ -3713,7 +3716,7 @@ class rwpsettingViewset(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         try:
             data_dict = serializer.validated_data
-            # unwanted_keys = ["unit_type", "water_treatment", "company_name", "componant_name"]
+            # unwanted_keys = ["unit_type", "water_treatment", "company_name", "componant_nam,"site_name"e"]
             
             # Get the device information based on the provided values
             dinfo = device_info.objects.filter(componant_name=data_dict['componant_name'],
@@ -3731,7 +3734,7 @@ class rwpsettingViewset(viewsets.ModelViewSet):
                 #         del data_dict[key]
                         
                 # Publish data_dict to HiveMQ
-                # mqttc.publish(f'wc/{did}/updset/{cmpname}', str(data_dict))
+                # mqttc.publish(f'wc/{did}/updset/{cmpname}', str(data_dict).replace(' ',''))
                 # print("Data sent to HiveMQ")
                 
             serializer.save()  # Save the data to the database
@@ -3758,7 +3761,7 @@ class hppstateViewset(viewsets.ModelViewSet):
         
             try:
                 data_dict = json.loads(request.body)
-                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","device_id"]  # Example of unwanted keys
+                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","site_name","device_id"]  # Example of unwanted keys
                 
                 value_list=list(data_dict.values())
                 
@@ -3772,7 +3775,7 @@ class hppstateViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
-                mqttc.publish(f'wc/{did}/chgsta/{cmpname}',str(data_dict))
+                mqttc.publish(f'wc/{did}/chgsta/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} Hpp status change has been requested status:{value_list[3]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='hpp',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
@@ -3809,7 +3812,7 @@ class hppsettingViewset(viewsets.ModelViewSet):
             
             try:
                 data_dict = json.loads(request.body)
-                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","device_id"]  # Example of unwanted keys
+                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","site_name","device_id"]  # Example of unwanted keys
                 
                 value_list=list(data_dict.values())
                 
@@ -3823,7 +3826,7 @@ class hppsettingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
-                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict))
+                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} Hpp settings change has been requested over load current:{value_list[3]},span:{value_list[4]},dry run current:{value_list[5]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='hpp',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
@@ -3856,7 +3859,7 @@ class cndsettingViewset(viewsets.ModelViewSet):
         def dispatch(self, request, *args, **kwargs):
             try:
                 data_dict = json.loads(request.body)
-                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","device_id"]  # Example of unwanted keys
+                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","site_name","device_id"]  # Example of unwanted keys
                 value_list=list(data_dict.values())
                 dinfo=device_info.objects.filter(componant_name=value_list[2],unit_type=value_list[1],company_name=value_list[0])
                 did = 0
@@ -3869,7 +3872,7 @@ class cndsettingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
-                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict))
+                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} cnd settings change has been requested span:{value_list[3]},trip_setpoint:{value_list[4]},atert_setpoint:{value_list[5]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='cnd',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
@@ -3903,7 +3906,7 @@ class tdssettingViewset(viewsets.ModelViewSet):
         
             try:
                 data_dict = json.loads(request.body)
-                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","device_id"]  # Example of unwanted keys
+                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","site_name","device_id"]  # Example of unwanted keys
                 
                 value_list=list(data_dict.values())
                 print("valuelist is:",value_list)
@@ -3917,7 +3920,7 @@ class tdssettingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
-                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict))
+                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 print("data successfully send to hivemqtt")
                 print("did is:",did)
                 print("cname:",cmpname)
@@ -3954,7 +3957,7 @@ class FflowsensettingViewset(viewsets.ModelViewSet):
         
             try:
                 data_dict = json.loads(request.body)
-                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","device_id"]  # Example of unwanted keys
+                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","site_name","device_id"]  # Example of unwanted keys
                 
                 value_list=list(data_dict.values())
                 
@@ -3968,7 +3971,7 @@ class FflowsensettingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
-                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict))
+                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} Fflowsen settings change has been requested flow factor:{value_list[3]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='Fflowsen',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
@@ -4003,7 +4006,7 @@ class PflowsensettingViewset(viewsets.ModelViewSet):
         
             try:
                 data_dict = json.loads(request.body)
-                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","device_id"]  # Example of unwanted keys
+                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","site_name","device_id"]  # Example of unwanted keys
                 
                 value_list=list(data_dict.values())
                 
@@ -4017,7 +4020,7 @@ class PflowsensettingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
-                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict))
+                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} Pflowsen settings change has been requested flow factor:{value_list[3]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='Pflowsen',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
@@ -4051,7 +4054,7 @@ class panelsettingViewset(viewsets.ModelViewSet):
         
             try:
                 data_dict = json.loads(request.body)
-                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","device_id"]  # Example of unwanted keys
+                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","site_name","device_id"]  # Example of unwanted keys
                 
                 value_list=list(data_dict.values())
                 
@@ -4065,7 +4068,7 @@ class panelsettingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
-                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict))
+                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} panel settings change has been requested mode:{value_list[3]},under voltage:{value_list[6]},over voltage:{value_list[7]},span:{value_list[8]},no.of multiport valve:{value_list[4]},sensor type:{value_list[5]},service time:{value_list[9]},backwash time:{value_list[10]},rinse time:{value_list[11]},"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='panel',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
@@ -4099,7 +4102,7 @@ class atmsettingViewset(viewsets.ModelViewSet):
         
             try:
                 data_dict = json.loads(request.body)
-                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","device_id"]  # Example of unwanted keys
+                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","site_name","device_id"]  # Example of unwanted keys
                 
                 value_list=list(data_dict.values())
                 
@@ -4113,7 +4116,7 @@ class atmsettingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
-                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict))
+                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} atm settings change has been requested over no. Of  tap:{value_list[3]},no. Of volume:{value_list[4]},volume1:{value_list[5]},volume2:{value_list[6]},volume3:{value_list[7]},volume4:{value_list[8]},rate1:{value_list[9]},rate2:{value_list[10]},rate3:{value_list[11]},rate4:{value_list[12]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='atm',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
@@ -4148,7 +4151,7 @@ class cnd_consensettingViewset(viewsets.ModelViewSet):
         
             try:
                 data_dict = json.loads(request.body)
-                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","device_id"]  # Example of unwanted keys
+                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","site_name","device_id"]  # Example of unwanted keys
                 
                 value_list=list(data_dict.values())
                 
@@ -4162,7 +4165,7 @@ class cnd_consensettingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
-                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict))
+                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} cnd_consen settings change has been requested span:{value_list[3]},atert_setpoint:{value_list[4]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='cnd_consen',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
@@ -4196,7 +4199,7 @@ class tds_consensettingViewset(viewsets.ModelViewSet):
         
             try:
                 data_dict = json.loads(request.body)
-                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","device_id"]  # Example of unwanted keys
+                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","site_name","device_id"]  # Example of unwanted keys
                 
                 value_list=list(data_dict.values())
                 
@@ -4210,7 +4213,7 @@ class tds_consensettingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
-                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict))
+                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tds_consen settings change has been requested span:{value_list[3]},atert_setpoint:{value_list[4]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='tds_consen',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
@@ -4244,7 +4247,7 @@ class ampv1stateViewset(viewsets.ModelViewSet):
         
             try:
                 data_dict = json.loads(request.body)
-                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","device_id"]  # Example of unwanted keys
+                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","site_name","device_id"]  # Example of unwanted keys
                 
                 value_list=list(data_dict.values())
                 
@@ -4258,7 +4261,7 @@ class ampv1stateViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
-                mqttc.publish(f'wc/{did}/chgsta/{cmpname}',str(data_dict))
+                mqttc.publish(f'wc/{did}/chgsta/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv1 status change has been requested position:{value_list[3]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='ampv1',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
@@ -4293,7 +4296,7 @@ class ampv1settingViewset(viewsets.ModelViewSet):
         
             try:
                 data_dict = json.loads(request.body)
-                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","device_id"]  # Example of unwanted keys
+                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","site_name","device_id"]  # Example of unwanted keys
                 
                 value_list=list(data_dict.values())
                 
@@ -4307,7 +4310,7 @@ class ampv1settingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
-                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict))
+                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv1 settings change has been requested service time:{value_list[8]},backwash time:{value_list[9]},rins time:{value_list[10]},motor on delay time:{value_list[11]},output1:{value_list[12]},output2:{value_list[13]},output3:{value_list[14]},input1:{value_list[4]},input2:{value_list[5]},input3:{value_list[6]},pressure switch input:{value_list[7]},sensor type:{value_list[3]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='ampv1',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
@@ -4341,7 +4344,7 @@ class ampv2stateViewset(viewsets.ModelViewSet):
         
             try:
                 data_dict = json.loads(request.body)
-                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","device_id"]  # Example of unwanted keys
+                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","site_name","device_id"]  # Example of unwanted keys
                 
                 value_list=list(data_dict.values())
                 
@@ -4355,7 +4358,7 @@ class ampv2stateViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
-                mqttc.publish(f'wc/{did}/chgsta/{cmpname}',str(data_dict))
+                mqttc.publish(f'wc/{did}/chgsta/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv2 status change has been requested position:{value_list[3]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='ampv2',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
@@ -4388,7 +4391,7 @@ class ampv2settingViewset(viewsets.ModelViewSet):
         
             try:
                 data_dict = json.loads(request.body)
-                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","device_id"]  # Example of unwanted keys
+                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","site_name","device_id"]  # Example of unwanted keys
                 
                 value_list=list(data_dict.values())
                 
@@ -4402,7 +4405,7 @@ class ampv2settingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
-                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict))
+                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv2 settings change has been requested service time:{value_list[8]},backwash time:{value_list[9]},rins time:{value_list[10]},motor on delay time:{value_list[11]},output1:{value_list[12]},output2:{value_list[13]},output3:{value_list[14]},input1:{value_list[4]},input2:{value_list[5]},input3:{value_list[6]},pressure switch input:{value_list[7]},sensor type:{value_list[3]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='ampv2',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
@@ -4436,7 +4439,7 @@ class tap1settingViewset(viewsets.ModelViewSet):
         
             try:
                 data_dict = json.loads(request.body)
-                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","device_id"]  # Example of unwanted keys
+                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","site_name","device_id"]  # Example of unwanted keys
                 
                 value_list=list(data_dict.values())
                 
@@ -4450,7 +4453,7 @@ class tap1settingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
-                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict))
+                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tap1 settings change has been requested pulse1:{value_list[3]},pulse2:{value_list[4]},pulse3:{value_list[5]},pulse2:{value_list[6]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='tap1',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
@@ -4484,7 +4487,7 @@ class tap2settingViewset(viewsets.ModelViewSet):
         
             try:
                 data_dict = json.loads(request.body)
-                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","device_id"]  # Example of unwanted keys
+                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","site_name","device_id"]  # Example of unwanted keys
                 
                 value_list=list(data_dict.values())
                 
@@ -4498,7 +4501,7 @@ class tap2settingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
-                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict))
+                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tap2 settings change has been requested pulse1:{value_list[1]},pulse2:{value_list[2]},pulse3:{value_list[3]},pulse2:{value_list[4]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='tap2',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
@@ -4532,7 +4535,7 @@ class tap3settingViewset(viewsets.ModelViewSet):
         
             try:
                 data_dict = json.loads(request.body)
-                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","device_id"]  # Example of unwanted keys
+                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","site_name","device_id"]  # Example of unwanted keys
                 
                 value_list=list(data_dict.values())
                 
@@ -4546,7 +4549,7 @@ class tap3settingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
-                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict))
+                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tap3 settings change has been requested pulse1:{value_list[3]},pulse2:{value_list[4]},pulse3:{value_list[5]},pulse2:{value_list[6]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='tap3',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
@@ -4581,7 +4584,7 @@ class tap4settingViewset(viewsets.ModelViewSet):
         
             try:
                 data_dict = json.loads(request.body)
-                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","device_id"]  # Example of unwanted keys
+                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","site_name","device_id"]  # Example of unwanted keys
                 
                 value_list=list(data_dict.values())
                 
@@ -4595,7 +4598,7 @@ class tap4settingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
-                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict))
+                mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tap4 settings change has been requested pulse1:{value_list[3]},pulse2:{value_list[4]},pulse3:{value_list[5]},pulse2:{value_list[6]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='tap4',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
