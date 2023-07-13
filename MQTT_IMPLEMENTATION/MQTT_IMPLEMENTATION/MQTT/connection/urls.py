@@ -137,7 +137,7 @@ router.register(r'updated_treat_P_flowsen',updated_treat_P_flowsenViewset,basena
 router.register(r'updated_disp_cnd_consen',updated_disp_cnd_consenViewset,basename='disp_cnd_consen')
 router.register(r'updated_disp_tds_consen',updated_disp_tds_consenViewset,basename='disp_tds_consen')
 router.register(r'updated_disp_tap1',updated_disp_tap1Viewset,basename='disp_tap1')
-router.register(r'updated-disp_tap2',updated_disp_tap2Viewset,basename='disp_tap2')
+router.register(r'updated_disp_tap2',updated_disp_tap2Viewset,basename='disp_tap2')
 router.register(r'updated_disp_tap3',updated_disp_tap3Viewset,basename='disp_tap3')
 router.register(r'updated_disp_tap4',updated_disp_tap4Viewset,basename='disp_tap4')
 router.register(r'updated_disp_atm',updated_disp_atmViewset,basename='disp_atm')

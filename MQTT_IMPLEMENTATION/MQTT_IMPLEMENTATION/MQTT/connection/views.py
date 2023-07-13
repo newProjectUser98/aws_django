@@ -8145,7 +8145,7 @@ def on_message(client, userdata, msg):
                         erro.save()
                     else:
                         dd=dateandtime()
-                        e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} F_flowsen status has been updated flow rate:{fr2}"
+                        e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} F_flowsen status has been updated flow rate:{fr1}"
                         erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='F_flowsen',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                         erro.save()
                     #hourly
@@ -8326,7 +8326,7 @@ def on_message(client, userdata, msg):
                     ds.save() 
                     if msg_type == 'updset':
                         dd=dateandtime()
-                        e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} P_flowsen settings has been updated flow factor:{ff1}"
+                        e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} P_flowsen settings has been updated flow factor:{ff2}"
                         erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='P_flowsen',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                         erro.save()
                     else:
@@ -8518,7 +8518,7 @@ def on_message(client, userdata, msg):
                         ds.save()
                         if msg_type == 'updset':
                             dd=dateandtime()
-                            e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tap1 settings has been updated pulse1:{p1} pulse2:{p2} pulse3:{p2} pulse4:{p2}"
+                            e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tap1 settings has been updated pulse1:{p1} pulse2:{p2} pulse3:{p3} pulse4:{p4}"
                             erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='tap1',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                             erro.save()
                         else:
@@ -8708,8 +8708,8 @@ def on_message(client, userdata, msg):
                         ds.save()
                         if msg_type == 'updset':
                             dd=dateandtime()
-                            e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tap3 settings has been updated pulse1:{p1} pulse2:{p2} pulse3:{p2} pulse4:{p2}"
-                            erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='tap3',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                            e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tap2 settings has been updated pulse1:{p1} pulse2:{p2} pulse3:{p3} pulse4:{p4}"
+                            erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='tap2',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                             erro.save()
                         else:
                             pass
@@ -8897,7 +8897,7 @@ def on_message(client, userdata, msg):
                         ds.save()
                         if msg_type == 'updset':
                             dd=dateandtime()
-                            e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tap3 settings has been updated pulse1:{p1} pulse2:{p2} pulse3:{p2} pulse4:{p2}"
+                            e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tap3 settings has been updated pulse1:{p1} pulse2:{p2} pulse3:{p3} pulse4:{p4}"
                             erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='tap3',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                             erro.save()
                         else:
@@ -9087,7 +9087,7 @@ def on_message(client, userdata, msg):
                         # ds1.save()
                         if msg_type == 'updset':
                             dd=dateandtime()
-                            e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tap4 settings has been updated pulse1:{p1} pulse2:{p2} pulse3:{p2} pulse4:{p2}"
+                            e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tap4 settings has been updated pulse1:{p1} pulse2:{p2} pulse3:{p3} pulse4:{p4}"
                             erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='tap4',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                             erro.save()
                         else:
