@@ -11,12 +11,13 @@ IoT_protocol_name = "x-amzn-mqtt-ca"
 aws_iot_endpoint = "a2al4qktysi6gi-ats.iot.ap-southeast-1.amazonaws.com" # <random>.iot.<region>.amazonaws.com
 url = "https://{}".format(aws_iot_endpoint)
 
-# ca = "C://Users/harsh/Downloads/AmazonRootCA1.pem" 
-ca =  "C:/Users/My Pc/Desktop/Singapore_Region_Broker for webcrown/RootCA1.pem"
-# cert = "C:/Users/harsh/Downloads/30f1d28338acfe6f98921e02f445954428b147a069400dec8327a8d0c3356924-certificate.pem.crt"
-cert = "C:/Users/My Pc/Desktop/Singapore_Region_Broker for webcrown/Device-certificate.pem.crt"
-# private = "C:/Users/harsh/Downloads/30f1d28338acfe6f98921e02f445954428b147a069400dec8327a8d0c3356924-private.pem.key"
-private = "C:/Users/My Pc/Desktop/Singapore_Region_Broker for webcrown/private.pem.key"
+ca = "D:\WaterPro\aws_django\aws_broker_files/testing_CA1.pem"  # Testing
+cert = "D:\WaterPro\aws_django\aws_broker_files/testing_certificate.pem.crt"   # Testing 
+private = "D:\WaterPro\aws_django\aws_broker_files/testing_private.pem.key"  # Testing
+
+# ca = "D:\WaterPro\aws_django\aws_broker_files/live/Live_RootCA1.pem"  # Live
+# cert = "D:\WaterPro\aws_django\aws_broker_files/live/Live_certificate.pem.crt"   # Live 
+# private = "D:\WaterPro\aws_django\aws_broker_files/live/Live_private.pem.key"  # Live
 
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
