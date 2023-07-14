@@ -12,11 +12,11 @@ aws_iot_endpoint = "a2al4qktysi6gi-ats.iot.ap-southeast-1.amazonaws.com" # <rand
 url = "https://{}".format(aws_iot_endpoint)
 
 # ca = "C://Users/harsh/Downloads/AmazonRootCA1.pem" #testing
-ca =  "C:/Users/My Pc/Desktop/Singapore_Region_Broker for webcrown/RootCA1.pem"
+ca =  "C:/Users/My Pc/Desktop/6-7water/aws_django/aws_broker_files/RootCA1.pem"
 # cert = "C:/Users/harsh/Downloads/30f1d28338acfe6f98921e02f445954428b147a069400dec8327a8d0c3356924-certificate.pem.crt" #testing
-cert = "C:/Users/My Pc/Desktop/Singapore_Region_Broker for webcrown/Device-certificate.pem.crt"
+cert = "C:/Users/My Pc/Desktop/6-7water/aws_django/aws_broker_files/Device-certificate.pem.crt"
 # private = "C:/Users/harsh/Downloads/30f1d28338acfe6f98921e02f445954428b147a069400dec8327a8d0c3356924-private.pem.key" #testing
-private = "C:/Users/My Pc/Desktop/Singapore_Region_Broker for webcrown/private.pem.key"
+private = "C:/Users/My Pc/Desktop/6-7water/aws_django/aws_broker_files/private.pem.key"
 
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
