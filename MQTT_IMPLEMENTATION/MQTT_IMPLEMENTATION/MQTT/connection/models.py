@@ -2485,7 +2485,7 @@ class hpp_state(models.Model):
 
 
 class F_flowsen_setting(models.Model):
-    ff=models.CharField(max_length=100)
+    ff1=models.CharField(max_length=100)
     unit_type=models.CharField(max_length=100)
     company_name=models.CharField(max_length=100)
     componant_name=models.CharField(max_length=100)
@@ -2496,7 +2496,7 @@ class F_flowsen_setting(models.Model):
     # class Meta:
     #     app_label = 'devices'
 class P_flowsen_setting(models.Model):
-    ff=models.CharField(max_length=100)
+    ff2=models.CharField(max_length=100)
     unit_type=models.CharField(max_length=100)
     company_name=models.CharField(max_length=100)
     componant_name=models.CharField(max_length=100)
