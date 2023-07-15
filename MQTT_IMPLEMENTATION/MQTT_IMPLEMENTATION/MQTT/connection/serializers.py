@@ -503,12 +503,12 @@ class tdssettingSerializer(serializers.HyperlinkedModelSerializer):
 class FflowsensettingSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = F_flowsen_setting
-		fields=['ff','unit_type','company_name','componant_name']
+		fields=['ff1','unit_type','company_name','componant_name']
 
 class PflowsensettingSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = P_flowsen_setting
-		fields=['ff','unit_type','company_name','componant_name']
+		fields=['ff2','unit_type','company_name','componant_name']
 class panelsettingSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = panel_setting

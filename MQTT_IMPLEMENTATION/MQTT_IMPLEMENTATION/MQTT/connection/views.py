@@ -4068,7 +4068,12 @@ class panelsettingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
+                changesrt=data_dict['srt']
+                changesrt=changesrt.split(":")
+                hrtominit=int(changesrt[0])*60
+                data_dict['srt']=hrtominit+int(changesrt[1])
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
+                print("MMM:",data_dict)
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} panel settings change has been requested mode:{value_list[3]},under voltage:{value_list[6]},over voltage:{value_list[7]},span:{value_list[8]},no.of multiport valve:{value_list[4]},sensor type:{value_list[5]},service time:{value_list[9]},backwash time:{value_list[10]},rinse time:{value_list[11]},"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='panel',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
@@ -4102,7 +4107,7 @@ class atmsettingViewset(viewsets.ModelViewSet):
         
             try:
                 data_dict = json.loads(request.body)
-                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","site_name","device_id"]  # Example of unwanted keys
+                unwanted_keys = ["unit_type", "water_treatment","company_name","componant_name","site_name","device_id","ntt"]  # Example of unwanted keys
                 
                 value_list=list(data_dict.values())
                 
@@ -4310,7 +4315,12 @@ class ampv1settingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
+                changesrt=data_dict['srt']
+                changesrt=changesrt.split(":")
+                hrtominit=int(changesrt[0])*60
+                data_dict['srt']=hrtominit+int(changesrt[1])
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
+                print("Dattta:",data_dict)
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv1 settings change has been requested service time:{value_list[8]},backwash time:{value_list[9]},rins time:{value_list[10]},motor on delay time:{value_list[11]},output1:{value_list[12]},output2:{value_list[13]},output3:{value_list[14]},input1:{value_list[4]},input2:{value_list[5]},input3:{value_list[6]},pressure switch input:{value_list[7]},sensor type:{value_list[3]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='ampv1',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
@@ -4405,6 +4415,10 @@ class ampv2settingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
+                changesrt=data_dict['srt']
+                changesrt=changesrt.split(":")
+                hrtominit=int(changesrt[0])*60
+                data_dict['srt']=hrtominit+int(changesrt[1])
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv2 settings change has been requested service time:{value_list[8]},backwash time:{value_list[9]},rins time:{value_list[10]},motor on delay time:{value_list[11]},output1:{value_list[12]},output2:{value_list[13]},output3:{value_list[14]},input1:{value_list[4]},input2:{value_list[5]},input3:{value_list[6]},pressure switch input:{value_list[7]},sensor type:{value_list[3]}"
@@ -4783,9 +4797,17 @@ def on_message(client, userdata, msg):
             elif removed_col[0]=='cct':
                 cct=removed_col[1]
             elif removed_col[0]=='srt':
-                srt1=removed_col[1]
-                srt2=removed_col[2]
-                srt=srt1+':'+srt2
+                srt=removed_col[1]
+                # srt2=int(srt1)
+                # srt=srt2/60
+                # srt=str(srt)
+                # mints=srt.split(".")
+                # mintconvert=str(mints[1])
+                # mintconvert1="0."+mintconvert
+                # mintconvert2=round(float(mintconvert1)*60)
+                # srt=f"{str(mints[0])}:{str(mintconvert2)}"
+                # srt2=removed_col[2]
+                # srt=srt1+':'+srt2
             elif removed_col[0]=='bkt':
                 bkt=removed_col[1]
             elif removed_col[0]=='mot':
@@ -6021,7 +6043,7 @@ def on_message(client, userdata, msg):
                                 sums_ovv=sums_ovv+ovv
                                 sums_spn=sums_spn+spn
                                 sums_nmv=sums_nmv+nmv
-                                srt=srt.replace(':','')
+                                # srt=srt.replace(':','')
                                 sums_srt=sums_srt+int(srt)
                                 sums_bkt=sums_bkt+bkt
                                 sums_rst=sums_rst+rst
@@ -6079,7 +6101,7 @@ def on_message(client, userdata, msg):
                                 sums_ovv=sums_ovv+ovv
                                 sums_spn=sums_spn+spn
                                 sums_nmv=sums_nmv+nmv
-                                srt=srt.replace(':','')
+                                # srt=srt.replace(':','')
                                 sums_srt=sums_srt+int(srt)
                                 sums_bkt=sums_bkt+bkt
                                 sums_rst=sums_rst+rst
@@ -6137,7 +6159,7 @@ def on_message(client, userdata, msg):
                                 sums_ovv=sums_ovv+ovv
                                 sums_spn=sums_spn+spn
                                 sums_nmv=sums_nmv+nmv
-                                srt=srt.replace(':','')
+                                # srt=srt.replace(':','')
                                 sums_srt=sums_srt+int(srt)
                                 sums_bkt=sums_bkt+bkt
                                 sums_rst=sums_rst+rst
@@ -6239,7 +6261,7 @@ def on_message(client, userdata, msg):
                                 mot=yr.mot
                                 sums_rmt=sums_rmt+rmt
                                 sums_cct=sums_cct+cct
-                                srt=srt.replace(':','')
+                                # srt=srt.replace(':','')
                                 sums_srt=sums_srt+int(srt)
                                 sums_bkt=sums_bkt+bkt
                                 sums_rst=sums_rst+rst
@@ -6287,7 +6309,7 @@ def on_message(client, userdata, msg):
                                 mot=yr.mot
                                 sums_rmt=sums_rmt+rmt
                                 sums_cct=sums_cct+cct
-                                srt=srt.replace(':','')
+                                # srt=srt.replace(':','')
                                 sums_srt=sums_srt+int(srt)
                                 sums_bkt=sums_bkt+bkt
                                 sums_rst=sums_rst+rst
@@ -6335,7 +6357,7 @@ def on_message(client, userdata, msg):
                                 mot=yr.mot
                                 sums_rmt=sums_rmt+rmt
                                 sums_cct=sums_cct+cct
-                                srt=srt.replace(':','')
+                                # srt=srt.replace(':','')
                                 sums_srt=sums_srt+int(srt)
                                 sums_bkt=sums_bkt+bkt
                                 sums_rst=sums_rst+rst
@@ -6383,7 +6405,7 @@ def on_message(client, userdata, msg):
                                 mot=yr.mot
                                 sums_rmt=sums_rmt+rmt
                                 sums_cct=sums_cct+cct
-                                srt=srt.replace(':','')
+                                # srt=srt.replace(':','')
                                 sums_srt=sums_srt+int(srt)
                                 sums_bkt=sums_bkt+bkt
                                 sums_rst=sums_rst+rst
@@ -6485,7 +6507,7 @@ def on_message(client, userdata, msg):
                                 mot=yr.mot
                                 sums_rmt=sums_rmt+rmt
                                 sums_cct=sums_cct+cct
-                                srt=srt.replace(':','')
+                                # srt=srt.replace(':','')
                                 sums_srt=sums_srt+int(srt)
                                 sums_bkt=sums_bkt+bkt
                                 sums_rst=sums_rst+rst
@@ -6533,7 +6555,7 @@ def on_message(client, userdata, msg):
                                 mot=yr.mot
                                 sums_rmt=sums_rmt+rmt
                                 sums_cct=sums_cct+cct
-                                srt=srt.replace(':','')
+                                # srt=srt.replace(':','')
                                 sums_srt=sums_srt+int(srt)
                                 sums_bkt=sums_bkt+bkt
                                 sums_rst=sums_rst+rst
@@ -6581,7 +6603,7 @@ def on_message(client, userdata, msg):
                                 mot=yr.mot
                                 sums_rmt=sums_rmt+rmt
                                 sums_cct=sums_cct+cct
-                                srt=srt.replace(':','')
+                                # srt=srt.replace(':','')
                                 sums_srt=sums_srt+int(srt)
                                 sums_bkt=sums_bkt+bkt
                                 sums_rst=sums_rst+rst
@@ -6629,7 +6651,7 @@ def on_message(client, userdata, msg):
                                 mot=yr.mot
                                 sums_rmt=sums_rmt+rmt
                                 sums_cct=sums_cct+cct
-                                srt=srt.replace(':','')
+                                # srt=srt.replace(':','')
                                 sums_srt=sums_srt+int(srt)
                                 sums_bkt=sums_bkt+bkt
                                 sums_rst=sums_rst+rst
@@ -6728,7 +6750,7 @@ def on_message(client, userdata, msg):
                                 mot=yr.mot
                                 sums_rmt=sums_rmt+rmt
                                 sums_cct=sums_cct+cct
-                                srt=srt.replace(':','')
+                                # srt=srt.replace(':','')
                                 sums_srt=sums_srt+int(srt)
                                 sums_bkt=sums_bkt+bkt
                                 sums_rst=sums_rst+rst
