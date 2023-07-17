@@ -3635,6 +3635,8 @@ class RwpstateViewset(viewsets.ModelViewSet):
                     if key in data_dict:
                         del data_dict[key]
                 print("datadict1:",data_dict)
+                for key in data_dict:
+                    data_dict[key] = str(data_dict[key])
                 mqttc.publish(f'wc/{did}/chgsta/{cmpname}',str(data_dict).replace(' ',''))
                 print("***$$$@",str(data_dict).replace(' ',''))
                 dd=dateandtime()
@@ -3694,6 +3696,8 @@ class rwpsettingViewset(viewsets.ModelViewSet):
             for key in unwanted_keys:
                 if key in data_dict:
                     del data_dict[key]
+            for key in data_dict:
+                    data_dict[key] = str(data_dict[key])
             mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
             
             print("data send to hivemq")
@@ -3775,6 +3779,8 @@ class hppstateViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
+                for key in data_dict:
+                    data_dict[key] = str(data_dict[key])
                 mqttc.publish(f'wc/{did}/chgsta/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} Hpp status change has been requested - status:{value_list[3]}"
@@ -3826,6 +3832,8 @@ class hppsettingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
+                for key in data_dict:
+                    data_dict[key] = str(data_dict[key])
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} Hpp settings change has been requested - over load current:{value_list[3]}, span:{value_list[4]}, dry run current:{value_list[5]}"
@@ -3872,6 +3880,8 @@ class cndsettingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
+                for key in data_dict:
+                    data_dict[key] = str(data_dict[key])
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} cnd settings change has been requested - span:{value_list[3]}, trip_setpoint:{value_list[4]}, atert_setpoint:{value_list[5]}"
@@ -3920,6 +3930,8 @@ class tdssettingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
+                for key in data_dict:
+                    data_dict[key] = str(data_dict[key])
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 print("data successfully send to hivemqtt")
                 print("did is:",did)
@@ -3971,6 +3983,8 @@ class FflowsensettingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
+                for key in data_dict:
+                    data_dict[key] = str(data_dict[key])
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} Fflowsen settings change has been requested - flow factor:{value_list[3]}"
@@ -4020,6 +4034,8 @@ class PflowsensettingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
+                for key in data_dict:
+                    data_dict[key] = str(data_dict[key])
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} Pflowsen settings change has been requested - flow factor:{value_list[3]}"
@@ -4072,6 +4088,8 @@ class panelsettingViewset(viewsets.ModelViewSet):
                 changesrt=changesrt.split(":")
                 hrtominit=int(changesrt[0])*60
                 data_dict['srt']=hrtominit+int(changesrt[1])
+                for key in data_dict:
+                    data_dict[key] = str(data_dict[key])
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 print("MMM:",data_dict)
                 dd=dateandtime()
@@ -4121,6 +4139,8 @@ class atmsettingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
+                for key in data_dict:
+                    data_dict[key] = str(data_dict[key])
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} atm settings change has been requested - over no. Of  tap:{value_list[3]}, no. Of volume:{value_list[4]}, volume1:{value_list[5]}, volume2:{value_list[6]}, volume3:{value_list[7]}, volume4:{value_list[8]}, rate1:{value_list[9]}, rate2:{value_list[10]}, rate3:{value_list[11]}, rate4:{value_list[12]}"
@@ -4163,13 +4183,15 @@ class cnd_consensettingViewset(viewsets.ModelViewSet):
                 dinfo=device_info.objects.filter(componant_name=value_list[2],unit_type=value_list[1],company_name=value_list[0])
                 global deviceid
                 for x in dinfo:
-                    
                     did=x.Device_id
                     cmpname=x.componant_name
                     deviceid=did
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
+                print("device is:", deviceid)
+                for key in data_dict:
+                    data_dict[key] = str(data_dict[key])
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} cnd_consen settings change has been requested - span:{value_list[3]}, atert_setpoint:{value_list[4]}"
@@ -4182,7 +4204,7 @@ class cnd_consensettingViewset(viewsets.ModelViewSet):
         def perform_create(self, serializer):
             try:
                 serializer.save()  # Save the data to the database
-                ddid=cnd_setting.objects.filter(device_id='').update(device_id=deviceid)
+                ddid=cnd_consen_setting.objects.filter(device_id='').update(device_id=deviceid)
                 ddid.save()
             except Exception as e:
                 pass        
@@ -4218,6 +4240,8 @@ class tds_consensettingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
+                for key in data_dict:
+                    data_dict[key] = str(data_dict[key])
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tds_consen settings change has been requested - span:{value_list[3]}, atert_setpoint:{value_list[4]}"
@@ -4266,6 +4290,8 @@ class ampv1stateViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
+                for key in data_dict:
+                    data_dict[key] = str(data_dict[key])
                 mqttc.publish(f'wc/{did}/chgsta/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv1 status change has been requested - position:{value_list[3]}"
@@ -4319,6 +4345,8 @@ class ampv1settingViewset(viewsets.ModelViewSet):
                 changesrt=changesrt.split(":")
                 hrtominit=int(changesrt[0])*60
                 data_dict['srt']=hrtominit+int(changesrt[1])
+                for key in data_dict:
+                    data_dict[key] = str(data_dict[key])
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 print("Dattta:",data_dict)
                 dd=dateandtime()
@@ -4368,6 +4396,8 @@ class ampv2stateViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
+                for key in data_dict:
+                    data_dict[key] = str(data_dict[key])
                 mqttc.publish(f'wc/{did}/chgsta/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv2 status change has been requested - position:{value_list[3]}"
@@ -4419,6 +4449,8 @@ class ampv2settingViewset(viewsets.ModelViewSet):
                 changesrt=changesrt.split(":")
                 hrtominit=int(changesrt[0])*60
                 data_dict['srt']=hrtominit+int(changesrt[1])
+                for key in data_dict:
+                    data_dict[key] = str(data_dict[key])
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv2 settings change has been requested - service time:{value_list[8]}, backwash time:{value_list[9]}, rins time:{value_list[10]}, motor on delay time:{value_list[11]}, output1:{value_list[12]}, output2:{value_list[13]}, output3:{value_list[14]}, input1:{value_list[4]}, input2:{value_list[5]}, input3:{value_list[6]}, pressure switch input:{value_list[7]}, sensor type:{value_list[3]}"
@@ -4467,6 +4499,8 @@ class tap1settingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
+                for key in data_dict:
+                    data_dict[key] = str(data_dict[key])
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 print("*!*!*!:",data_dict)
                 dd=dateandtime()
@@ -4516,6 +4550,8 @@ class tap2settingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
+                for key in data_dict:
+                    data_dict[key] = str(data_dict[key])
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tap2 settings change has been requested - pulse1:{value_list[1]}, pulse2:{value_list[2]}, pulse3:{value_list[3]}, pulse4:{value_list[4]}"
@@ -4564,6 +4600,8 @@ class tap3settingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
+                for key in data_dict:
+                    data_dict[key] = str(data_dict[key])
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tap3 settings change has been requested - pulse1:{value_list[3]}, pulse2:{value_list[4]}, pulse3:{value_list[5]}, pulse4:{value_list[6]}"
@@ -4613,6 +4651,8 @@ class tap4settingViewset(viewsets.ModelViewSet):
                 for key in unwanted_keys:
                     if key in data_dict:
                         del data_dict[key]
+                for key in data_dict:
+                    data_dict[key] = str(data_dict[key])
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
                 e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tap4 settings change has been requested - pulse1:{value_list[3]}, pulse2:{value_list[4]}, pulse3:{value_list[5]}, pulse4:{value_list[6]}"
