@@ -3638,7 +3638,7 @@ class RwpstateViewset(viewsets.ModelViewSet):
                 mqttc.publish(f'wc/{did}/chgsta/{cmpname}',str(data_dict).replace(' ',''))
                 print("***$$$@",str(data_dict).replace(' ',''))
                 dd=dateandtime()
-                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} rwp status change has been requested status:{value_list[3]}"
+                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} rwp status change has been requested - status:{value_list[3]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='rwp',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                 erro.save()
 
@@ -3702,7 +3702,7 @@ class rwpsettingViewset(viewsets.ModelViewSet):
             # rwp_setting.objects.filter(device_id='').update(device_id=did)
             # rwp_setting.objects.all().update(device_id=did)
             dd=dateandtime()
-            e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} rwp settings change has been requested over load current:{value_list[3]},span:{value_list[4]},dry run current:{value_list[5]}"
+            e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} rwp settings change has been requested - over load current:{value_list[3]}, span:{value_list[4]}, dry run current:{value_list[5]}"
             erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='rwp',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
             erro.save()
             
@@ -3777,7 +3777,7 @@ class hppstateViewset(viewsets.ModelViewSet):
                         del data_dict[key]
                 mqttc.publish(f'wc/{did}/chgsta/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
-                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} Hpp status change has been requested status:{value_list[3]}"
+                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} Hpp status change has been requested - status:{value_list[3]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='hpp',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                 erro.save()
 
@@ -3828,7 +3828,7 @@ class hppsettingViewset(viewsets.ModelViewSet):
                         del data_dict[key]
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
-                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} Hpp settings change has been requested over load current:{value_list[3]},span:{value_list[4]},dry run current:{value_list[5]}"
+                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} Hpp settings change has been requested - over load current:{value_list[3]}, span:{value_list[4]}, dry run current:{value_list[5]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='hpp',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                 erro.save()
 
@@ -3874,7 +3874,7 @@ class cndsettingViewset(viewsets.ModelViewSet):
                         del data_dict[key]
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
-                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} cnd settings change has been requested span:{value_list[3]},trip_setpoint:{value_list[4]},atert_setpoint:{value_list[5]}"
+                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} cnd settings change has been requested - span:{value_list[3]}, trip_setpoint:{value_list[4]}, atert_setpoint:{value_list[5]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='cnd',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                 erro.save()
             except Exception as e:
@@ -3925,7 +3925,7 @@ class tdssettingViewset(viewsets.ModelViewSet):
                 print("did is:",did)
                 print("cname:",cmpname)
                 dd=dateandtime()
-                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tds settings change has been requested span:{value_list[3]},trip_setpoint:{value_list[4]},atert_setpoint:{value_list[5]}"
+                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tds settings change has been requested - span:{value_list[3]}, trip_setpoint:{value_list[4]}, atert_setpoint:{value_list[5]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='tds',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                 erro.save()
             except Exception as e:
@@ -3973,7 +3973,7 @@ class FflowsensettingViewset(viewsets.ModelViewSet):
                         del data_dict[key]
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
-                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} Fflowsen settings change has been requested flow factor:{value_list[3]}"
+                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} Fflowsen settings change has been requested - flow factor:{value_list[3]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='Fflowsen',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                 erro.save()
 
@@ -4022,7 +4022,7 @@ class PflowsensettingViewset(viewsets.ModelViewSet):
                         del data_dict[key]
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
-                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} Pflowsen settings change has been requested flow factor:{value_list[3]}"
+                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} Pflowsen settings change has been requested - flow factor:{value_list[3]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='Pflowsen',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                 erro.save()
 
@@ -4075,7 +4075,7 @@ class panelsettingViewset(viewsets.ModelViewSet):
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 print("MMM:",data_dict)
                 dd=dateandtime()
-                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} panel settings change has been requested mode:{value_list[3]},under voltage:{value_list[6]},over voltage:{value_list[7]},span:{value_list[8]},no.of multiport valve:{value_list[4]},sensor type:{value_list[5]},service time:{value_list[9]},backwash time:{value_list[10]},rinse time:{value_list[11]},"
+                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} panel settings change has been requested - mode:{value_list[3]}, under voltage:{value_list[6]}, over voltage:{value_list[7]}, span:{value_list[8]}, no.of multiport valve:{value_list[4]}, sensor type:{value_list[5]}, service time:{value_list[9]}, backwash time:{value_list[10]}, rinse time:{value_list[11]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='panel',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                 erro.save()    
 
@@ -4123,7 +4123,7 @@ class atmsettingViewset(viewsets.ModelViewSet):
                         del data_dict[key]
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
-                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} atm settings change has been requested over no. Of  tap:{value_list[3]},no. Of volume:{value_list[4]},volume1:{value_list[5]},volume2:{value_list[6]},volume3:{value_list[7]},volume4:{value_list[8]},rate1:{value_list[9]},rate2:{value_list[10]},rate3:{value_list[11]},rate4:{value_list[12]}"
+                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} atm settings change has been requested - over no. Of  tap:{value_list[3]}, no. Of volume:{value_list[4]}, volume1:{value_list[5]}, volume2:{value_list[6]}, volume3:{value_list[7]}, volume4:{value_list[8]}, rate1:{value_list[9]}, rate2:{value_list[10]}, rate3:{value_list[11]}, rate4:{value_list[12]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='atm',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                 erro.save() 
 
@@ -4172,7 +4172,7 @@ class cnd_consensettingViewset(viewsets.ModelViewSet):
                         del data_dict[key]
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
-                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} cnd_consen settings change has been requested span:{value_list[3]},atert_setpoint:{value_list[4]}"
+                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} cnd_consen settings change has been requested - span:{value_list[3]}, atert_setpoint:{value_list[4]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='cnd_consen',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                 erro.save()
 
@@ -4220,7 +4220,7 @@ class tds_consensettingViewset(viewsets.ModelViewSet):
                         del data_dict[key]
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
-                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tds_consen settings change has been requested span:{value_list[3]},atert_setpoint:{value_list[4]}"
+                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tds_consen settings change has been requested - span:{value_list[3]}, atert_setpoint:{value_list[4]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='tds_consen',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                 erro.save()
 
@@ -4268,7 +4268,7 @@ class ampv1stateViewset(viewsets.ModelViewSet):
                         del data_dict[key]
                 mqttc.publish(f'wc/{did}/chgsta/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
-                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv1 status change has been requested position:{value_list[3]}"
+                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv1 status change has been requested - position:{value_list[3]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='ampv1',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                 erro.save()
 
@@ -4322,7 +4322,7 @@ class ampv1settingViewset(viewsets.ModelViewSet):
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 print("Dattta:",data_dict)
                 dd=dateandtime()
-                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv1 settings change has been requested service time:{value_list[8]},backwash time:{value_list[9]},rins time:{value_list[10]},motor on delay time:{value_list[11]},output1:{value_list[12]},output2:{value_list[13]},output3:{value_list[14]},input1:{value_list[4]},input2:{value_list[5]},input3:{value_list[6]},pressure switch input:{value_list[7]},sensor type:{value_list[3]}"
+                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv1 settings change has been requested - service time:{value_list[8]}, backwash time:{value_list[9]}, rins time:{value_list[10]}, motor on delay time:{value_list[11]}, output1:{value_list[12]}, output2:{value_list[13]}, output3:{value_list[14]}, input1:{value_list[4]}, input2:{value_list[5]}, input3:{value_list[6]}, pressure switch input:{value_list[7]}, sensor type:{value_list[3]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='ampv1',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                 erro.save()
 
@@ -4370,7 +4370,7 @@ class ampv2stateViewset(viewsets.ModelViewSet):
                         del data_dict[key]
                 mqttc.publish(f'wc/{did}/chgsta/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
-                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv2 status change has been requested position:{value_list[3]}"
+                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv2 status change has been requested - position:{value_list[3]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='ampv2',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                 erro.save()
             except Exception as e:
@@ -4421,7 +4421,7 @@ class ampv2settingViewset(viewsets.ModelViewSet):
                 data_dict['srt']=hrtominit+int(changesrt[1])
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
-                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv2 settings change has been requested service time:{value_list[8]},backwash time:{value_list[9]},rins time:{value_list[10]},motor on delay time:{value_list[11]},output1:{value_list[12]},output2:{value_list[13]},output3:{value_list[14]},input1:{value_list[4]},input2:{value_list[5]},input3:{value_list[6]},pressure switch input:{value_list[7]},sensor type:{value_list[3]}"
+                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} ampv2 settings change has been requested - service time:{value_list[8]}, backwash time:{value_list[9]}, rins time:{value_list[10]}, motor on delay time:{value_list[11]}, output1:{value_list[12]}, output2:{value_list[13]}, output3:{value_list[14]}, input1:{value_list[4]}, input2:{value_list[5]}, input3:{value_list[6]}, pressure switch input:{value_list[7]}, sensor type:{value_list[3]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='ampv2',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                 erro.save()
             except Exception as e:
@@ -4470,7 +4470,7 @@ class tap1settingViewset(viewsets.ModelViewSet):
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 print("*!*!*!:",data_dict)
                 dd=dateandtime()
-                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tap1 settings change has been requested pulse1:{value_list[3]},pulse2:{value_list[4]},pulse3:{value_list[5]},pulse4:{value_list[6]}"
+                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tap1 settings change has been requested - pulse1:{value_list[3]}, pulse2:{value_list[4]}, pulse3:{value_list[5]}, pulse4:{value_list[6]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='tap1',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                 erro.save()
 
@@ -4518,7 +4518,7 @@ class tap2settingViewset(viewsets.ModelViewSet):
                         del data_dict[key]
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
-                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tap2 settings change has been requested pulse1:{value_list[1]},pulse2:{value_list[2]},pulse3:{value_list[3]},pulse4:{value_list[4]}"
+                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tap2 settings change has been requested - pulse1:{value_list[1]}, pulse2:{value_list[2]}, pulse3:{value_list[3]}, pulse4:{value_list[4]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='tap2',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                 erro.save()
 
@@ -4566,7 +4566,7 @@ class tap3settingViewset(viewsets.ModelViewSet):
                         del data_dict[key]
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
-                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tap3 settings change has been requested pulse1:{value_list[3]},pulse2:{value_list[4]},pulse3:{value_list[5]},pulse4:{value_list[6]}"
+                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tap3 settings change has been requested - pulse1:{value_list[3]}, pulse2:{value_list[4]}, pulse3:{value_list[5]}, pulse4:{value_list[6]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='tap3',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                 erro.save()
 
@@ -4615,7 +4615,7 @@ class tap4settingViewset(viewsets.ModelViewSet):
                         del data_dict[key]
                 mqttc.publish(f'wc/{did}/chgset/{cmpname}',str(data_dict).replace(' ',''))
                 dd=dateandtime()
-                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tap4 settings change has been requested pulse1:{value_list[3]},pulse2:{value_list[4]},pulse3:{value_list[5]},pulse4:{value_list[6]}"
+                e=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} tap4 settings change has been requested - pulse1:{value_list[3]}, pulse2:{value_list[4]}, pulse3:{value_list[5]}, pulse4:{value_list[6]}"
                 erro=Errors.objects.create(device_id=deviceid,e_discriptions=e,service='tap4',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                 erro.save()
 
