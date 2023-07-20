@@ -4754,6 +4754,8 @@ def on_message(client, userdata, msg):
         ntt=''
         nta=0
         tmp=0
+        whr=''
+        custid=''
         ntp=0
         nov=0
         vl1=0
@@ -4904,9 +4906,12 @@ def on_message(client, userdata, msg):
                 p3=removed_col[1]
             elif removed_col[0]=='p4':
                 p4=removed_col[1]
-
             elif removed_col[0]=='fr':
                 fr=removed_col[1]
+            elif removed_col[0]=='whr':
+                whr=removed_col[1]
+            elif removed_col[0]=='custid':
+                custid=removed_col[1]
           
            
            
@@ -7457,16 +7462,16 @@ def on_message(client, userdata, msg):
                         
                         repo_latestobj = repo_latestdata.objects.filter(device_id=device_id).update(device_id=device_id, message_type=msg_type, atm=olddata)
 
-                    ds=disp_atm.objects.create(device_id=device_id,message_type=msg_type,sts=sts,ndv=ndv,ntt=ntt,nta=nta,tmp=tmp,ntp=ntp,nov=nov,vl1=vl1,vl2=vl2,vl3=vl3,vl4=vl4,re1=re1,re2=re2,re3=re3,re4=re4,year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
+                    ds=disp_atm.objects.create(device_id=device_id,message_type=msg_type,sts=sts,ndv=ndv,ntt=ntt,nta=nta,tmp=tmp,whr=whr,custid=custid,ntp=ntp,nov=nov,vl1=vl1,vl2=vl2,vl3=vl3,vl4=vl4,re1=re1,re2=re2,re3=re3,re4=re4,year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                     ds.save()
                     if msg_type == 'updset':
                         dd=dateandtime()
-                        e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} atm settings has been updated no. Of  tap:{ntp} no. Of volume:{nov}volume1:{vl1}volume2:{vl2}volume3:{vl3}volume4:{vl4}rate1:{re1}rate2:{re2}rate3:{re3}rate4:{re4}"
+                        e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} atm settings has been updated no. Of  tap:{ntp} no. Of volume:{nov} volume1:{vl1} volume2:{vl2} volume3:{vl3} volume4:{vl4} rate1:{re1} rate2:{re2} rate3:{re3} rate4:{re4}"
                         erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='atm',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                         erro.save()
                     else:
                         dd=dateandtime()
-                        e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} atm status has been updated status:{sts}new dispense volume:{ndv}new transaction type:{ntt}new transaction amount:{nta}water tempreture:{tmp}"
+                        e1=f"{dd[0]}-{dd[1]}-{dd[2]} {dd[3]}:{dd[4]}:{dd[5]} atm status has been updated status:{sts} new dispense volume:{ndv} new transaction type:{ntt} new transaction amount:{nta} water tempreture:{tmp} working hrs:{whr} card number:{custid}"
                         erro=Errors.objects.create(device_id=device_id,e_discriptions=e1,service='atm',year=dd[0],month=dd[1],day=dd[2],hour=dd[3],minit=dd[4],second=dd[5])
                         erro.save()
                     #hourly
@@ -7477,6 +7482,8 @@ def on_message(client, userdata, msg):
                     sums_ndv=0
                     sums_nta=0
                     sums_tmp=0
+                    sums_whr=0
+                    sums_whr=0
                     sums_ntp=0
                     sums_nov=0
                     sums_vl1=0
@@ -7490,6 +7497,7 @@ def on_message(client, userdata, msg):
                     avgs_ndv = 0
                     avgs_nta = 0
                     avgs_tmp = 0
+                    avgs_whr=0
                     avgs_ntp = 0
                     avgs_nov = 0
                     avgs_vl1 = 0
@@ -7507,6 +7515,8 @@ def on_message(client, userdata, msg):
                                 ndv=yr.ndv
                                 nta=yr.nta
                                 tmp=yr.tmp
+                                whr=float(yr.whr)
+                                custid=yr.custid
                                 ntp=yr.ntp
                                 nov=yr.nov
                                 vl1=yr.vl1
@@ -7520,6 +7530,7 @@ def on_message(client, userdata, msg):
                                 sums_ndv=sums_ndv+ndv
                                 sums_nta=sums_nta+nta
                                 sums_tmp=sums_tmp+tmp
+                                sums_whr=sums_whr+whr
                                 sums_ntp=sums_ntp+ntp
                                 sums_nov=sums_nov+nov
                                 sums_vl1=sums_vl1+vl1
@@ -7534,6 +7545,7 @@ def on_message(client, userdata, msg):
                         avgs_ndv=sums_ndv/count
                         avgs_nta=sums_nta/count
                         avgs_tmp=sums_tmp/count
+                        avgs_whr=sums_whr/count
                         avgs_ntp=sums_ntp/count
                         avgs_nov=sums_nov/count
                         avgs_vl1=sums_vl1/count
@@ -7546,9 +7558,9 @@ def on_message(client, userdata, msg):
                         avgs_re4=sums_re4/count
                     hr=atm_repo_hourly.objects.filter(year=dd[0],month=dd[1],day=dd[2],hour=dd[3],device_id=device_id)
                     if hr:
-                        yr_data=atm_repo_hourly.objects.filter(year=dd[0],month=dd[1],day=dd[2],hour=dd[3],device_id=device_id).update(device_id=device_id,service='atm',ndv={'sum':sums_ndv,'avg':avgs_ndv,'count':count},nta={'sum':sums_nta,'avg':avgs_nta,'count':count},tmp={'sum':sums_tmp,'avg':avgs_tmp,'count':count},ntp={'sum':sums_ntp,'avg':avgs_ntp,'count':count},nov={'sum':sums_nov,'avg':avgs_nov,'count':count},vl1={'sum':sums_vl1,'avg':avgs_vl1,'count':count},vl2={'sum':sums_vl2,'avg':avgs_vl2,'count':count},vl3={'sum':sums_vl3,'avg':avgs_vl3,'count':count},vl4={'sum':sums_vl4,'avg':avgs_vl4,'count':count},re1={'sum':sums_re1,'avg':avgs_re1,'count':count},re2={'sum':sums_re2,'avg':avgs_re2,'count':count},re3={'sum':sums_re3,'avg':avgs_re3,'count':count},re4={'sum':sums_re4,'avg':avgs_re4,'count':count},hour=dd[3],month=dd[1],year=dd[0],day=dd[2])
+                        yr_data=atm_repo_hourly.objects.filter(year=dd[0],month=dd[1],day=dd[2],hour=dd[3],device_id=device_id).update(device_id=device_id,service='atm',ndv={'sum':sums_ndv,'avg':avgs_ndv,'count':count},nta={'sum':sums_nta,'avg':avgs_nta,'count':count},tmp={'sum':sums_tmp,'avg':avgs_tmp,'count':count},whr={'sum':sums_whr,'avg':avgs_whr,'count':count},ntp={'sum':sums_ntp,'avg':avgs_ntp,'count':count},nov={'sum':sums_nov,'avg':avgs_nov,'count':count},vl1={'sum':sums_vl1,'avg':avgs_vl1,'count':count},vl2={'sum':sums_vl2,'avg':avgs_vl2,'count':count},vl3={'sum':sums_vl3,'avg':avgs_vl3,'count':count},vl4={'sum':sums_vl4,'avg':avgs_vl4,'count':count},re1={'sum':sums_re1,'avg':avgs_re1,'count':count},re2={'sum':sums_re2,'avg':avgs_re2,'count':count},re3={'sum':sums_re3,'avg':avgs_re3,'count':count},re4={'sum':sums_re4,'avg':avgs_re4,'count':count},hour=dd[3],month=dd[1],year=dd[0],day=dd[2])
                     else:
-                        yr_data=atm_repo_hourly.objects.create(device_id=device_id,service='atm',ndv={'sum':sums_ndv,'avg':avgs_ndv,'count':count},nta={'sum':sums_nta,'avg':avgs_nta,'count':count},tmp={'sum':sums_tmp,'avg':avgs_tmp,'count':count},ntp={'sum':sums_ntp,'avg':avgs_ntp,'count':count},nov={'sum':sums_nov,'avg':avgs_nov,'count':count},vl1={'sum':sums_vl1,'avg':avgs_vl1,'count':count},vl2={'sum':sums_vl2,'avg':avgs_vl2,'count':count},vl3={'sum':sums_vl3,'avg':avgs_vl3,'count':count},vl4={'sum':sums_vl4,'avg':avgs_vl4,'count':count},re1={'sum':sums_re1,'avg':avgs_re1,'count':count},re2={'sum':sums_re2,'avg':avgs_re2,'count':count},re3={'sum':sums_re3,'avg':avgs_re3,'count':count},re4={'sum':sums_re4,'avg':avgs_re4,'count':count},hour=dd[3],month=dd[1],year=dd[0],day=dd[2])
+                        yr_data=atm_repo_hourly.objects.create(device_id=device_id,service='atm',ndv={'sum':sums_ndv,'avg':avgs_ndv,'count':count},nta={'sum':sums_nta,'avg':avgs_nta,'count':count},tmp={'sum':sums_tmp,'avg':avgs_tmp,'count':count},whr={'sum':sums_whr,'avg':avgs_whr,'count':count},ntp={'sum':sums_ntp,'avg':avgs_ntp,'count':count},nov={'sum':sums_nov,'avg':avgs_nov,'count':count},vl1={'sum':sums_vl1,'avg':avgs_vl1,'count':count},vl2={'sum':sums_vl2,'avg':avgs_vl2,'count':count},vl3={'sum':sums_vl3,'avg':avgs_vl3,'count':count},vl4={'sum':sums_vl4,'avg':avgs_vl4,'count':count},re1={'sum':sums_re1,'avg':avgs_re1,'count':count},re2={'sum':sums_re2,'avg':avgs_re2,'count':count},re3={'sum':sums_re3,'avg':avgs_re3,'count':count},re4={'sum':sums_re4,'avg':avgs_re4,'count':count},hour=dd[3],month=dd[1],year=dd[0],day=dd[2])
                         yr_data.save()
 
                     #day
@@ -7559,6 +7571,7 @@ def on_message(client, userdata, msg):
                     sums_ndv=0
                     sums_nta=0
                     sums_tmp=0
+                    sums_whr=0
                     sums_ntp=0
                     sums_nov=0
                     sums_vl1=0
@@ -7572,6 +7585,7 @@ def on_message(client, userdata, msg):
                     avgs_ndv = 0
                     avgs_nta = 0
                     avgs_tmp = 0
+                    avgs_whr=0
                     avgs_ntp = 0
                     avgs_nov = 0
                     avgs_vl1 = 0
@@ -7589,6 +7603,7 @@ def on_message(client, userdata, msg):
                                 ndv=yr.ndv
                                 nta=yr.nta
                                 tmp=yr.tmp
+                                whr=float(yr.whr)
                                 ntp=yr.ntp
                                 nov=yr.nov
                                 vl1=yr.vl1
@@ -7602,6 +7617,7 @@ def on_message(client, userdata, msg):
                                 sums_ndv=sums_ndv+ndv
                                 sums_nta=sums_nta+nta
                                 sums_tmp=sums_tmp+tmp
+                                sums_whr=sums_whr+whr
                                 sums_ntp=sums_ntp+ntp
                                 sums_nov=sums_nov+nov
                                 sums_vl1=sums_vl1+vl1
@@ -7616,6 +7632,7 @@ def on_message(client, userdata, msg):
                         avgs_ndv=sums_ndv/count
                         avgs_nta=sums_nta/count
                         avgs_tmp=sums_tmp/count
+                        avgs_whr=sums_whr/count
                         avgs_ntp=sums_ntp/count
                         avgs_nov=sums_nov/count
                         avgs_vl1=sums_vl1/count
@@ -7628,9 +7645,9 @@ def on_message(client, userdata, msg):
                         avgs_re4=sums_re4/count
                     hr=atm_repo_daily.objects.filter(year=dd[0],month=dd[1],day=dd[2],device_id=device_id)
                     if hr:
-                        yr_data=atm_repo_daily.objects.filter(year=dd[0],month=dd[1],day=dd[2],device_id=device_id).update(device_id=device_id,service='atm',ndv={'sum':sums_ndv,'avg':avgs_ndv,'count':count},nta={'sum':sums_nta,'avg':avgs_nta,'count':count},tmp={'sum':sums_tmp,'avg':avgs_tmp,'count':count},ntp={'sum':sums_ntp,'avg':avgs_ntp,'count':count},nov={'sum':sums_nov,'avg':avgs_nov,'count':count},vl1={'sum':sums_vl1,'avg':avgs_vl1,'count':count},vl2={'sum':sums_vl2,'avg':avgs_vl2,'count':count},vl3={'sum':sums_vl3,'avg':avgs_vl3,'count':count},vl4={'sum':sums_vl4,'avg':avgs_vl4,'count':count},re1={'sum':sums_re1,'avg':avgs_re1,'count':count},re2={'sum':sums_re2,'avg':avgs_re2,'count':count},re3={'sum':sums_re3,'avg':avgs_re3,'count':count},re4={'sum':sums_re4,'avg':avgs_re4,'count':count},hour=dd[3],month=dd[1],year=dd[0],day=dd[2])
+                        yr_data=atm_repo_daily.objects.filter(year=dd[0],month=dd[1],day=dd[2],device_id=device_id).update(device_id=device_id,service='atm',ndv={'sum':sums_ndv,'avg':avgs_ndv,'count':count},nta={'sum':sums_nta,'avg':avgs_nta,'count':count},tmp={'sum':sums_tmp,'avg':avgs_tmp,'count':count},whr={'sum':sums_whr,'avg':avgs_whr,'count':count},ntp={'sum':sums_ntp,'avg':avgs_ntp,'count':count},nov={'sum':sums_nov,'avg':avgs_nov,'count':count},vl1={'sum':sums_vl1,'avg':avgs_vl1,'count':count},vl2={'sum':sums_vl2,'avg':avgs_vl2,'count':count},vl3={'sum':sums_vl3,'avg':avgs_vl3,'count':count},vl4={'sum':sums_vl4,'avg':avgs_vl4,'count':count},re1={'sum':sums_re1,'avg':avgs_re1,'count':count},re2={'sum':sums_re2,'avg':avgs_re2,'count':count},re3={'sum':sums_re3,'avg':avgs_re3,'count':count},re4={'sum':sums_re4,'avg':avgs_re4,'count':count},hour=dd[3],month=dd[1],year=dd[0],day=dd[2])
                     else:
-                        yr_data=atm_repo_daily.objects.create(device_id=device_id,service='atm',ndv={'sum':sums_ndv,'avg':avgs_ndv,'count':count},nta={'sum':sums_nta,'avg':avgs_nta,'count':count},tmp={'sum':sums_tmp,'avg':avgs_tmp,'count':count},ntp={'sum':sums_ntp,'avg':avgs_ntp,'count':count},nov={'sum':sums_nov,'avg':avgs_nov,'count':count},vl1={'sum':sums_vl1,'avg':avgs_vl1,'count':count},vl2={'sum':sums_vl2,'avg':avgs_vl2,'count':count},vl3={'sum':sums_vl3,'avg':avgs_vl3,'count':count},vl4={'sum':sums_vl4,'avg':avgs_vl4,'count':count},re1={'sum':sums_re1,'avg':avgs_re1,'count':count},re2={'sum':sums_re2,'avg':avgs_re2,'count':count},re3={'sum':sums_re3,'avg':avgs_re3,'count':count},re4={'sum':sums_re4,'avg':avgs_re4,'count':count},hour=dd[3],month=dd[1],year=dd[0],day=dd[2])
+                        yr_data=atm_repo_daily.objects.create(device_id=device_id,service='atm',ndv={'sum':sums_ndv,'avg':avgs_ndv,'count':count},nta={'sum':sums_nta,'avg':avgs_nta,'count':count},tmp={'sum':sums_tmp,'avg':avgs_tmp,'count':count},whr={'sum':sums_whr,'avg':avgs_whr,'count':count},ntp={'sum':sums_ntp,'avg':avgs_ntp,'count':count},nov={'sum':sums_nov,'avg':avgs_nov,'count':count},vl1={'sum':sums_vl1,'avg':avgs_vl1,'count':count},vl2={'sum':sums_vl2,'avg':avgs_vl2,'count':count},vl3={'sum':sums_vl3,'avg':avgs_vl3,'count':count},vl4={'sum':sums_vl4,'avg':avgs_vl4,'count':count},re1={'sum':sums_re1,'avg':avgs_re1,'count':count},re2={'sum':sums_re2,'avg':avgs_re2,'count':count},re3={'sum':sums_re3,'avg':avgs_re3,'count':count},re4={'sum':sums_re4,'avg':avgs_re4,'count':count},hour=dd[3],month=dd[1],year=dd[0],day=dd[2])
                         yr_data.save()
 
                     #monthly
@@ -7641,6 +7658,7 @@ def on_message(client, userdata, msg):
                     sums_ndv=0
                     sums_nta=0
                     sums_tmp=0
+                    sums_whr=0
                     sums_ntp=0
                     sums_nov=0
                     sums_vl1=0
@@ -7654,6 +7672,7 @@ def on_message(client, userdata, msg):
                     avgs_ndv = 0
                     avgs_nta = 0
                     avgs_tmp = 0
+                    avgs_whr=0
                     avgs_ntp = 0
                     avgs_nov = 0
                     avgs_vl1 = 0
@@ -7671,6 +7690,7 @@ def on_message(client, userdata, msg):
                                 ndv=yr.ndv
                                 nta=yr.nta
                                 tmp=yr.tmp
+                                whr=float(yr.whr)
                                 ntp=yr.ntp
                                 nov=yr.nov
                                 vl1=yr.vl1
@@ -7684,6 +7704,7 @@ def on_message(client, userdata, msg):
                                 sums_ndv=sums_ndv+ndv
                                 sums_nta=sums_nta+nta
                                 sums_tmp=sums_tmp+tmp
+                                sums_whr=sums_whr+whr
                                 sums_ntp=sums_ntp+ntp
                                 sums_nov=sums_nov+nov
                                 sums_vl1=sums_vl1+vl1
@@ -7698,6 +7719,7 @@ def on_message(client, userdata, msg):
                         avgs_ndv=sums_ndv/count
                         avgs_nta=sums_nta/count
                         avgs_tmp=sums_tmp/count
+                        avgs_whr=sums_whr/count
                         avgs_ntp=sums_ntp/count
                         avgs_nov=sums_nov/count
                         avgs_vl1=sums_vl1/count
@@ -7710,9 +7732,9 @@ def on_message(client, userdata, msg):
                         avgs_re4=sums_re4/count
                     hr=atm_repo_monthly.objects.filter(year=dd[0],month=dd[1],device_id=device_id)
                     if hr:
-                        yr_data=atm_repo_monthly.objects.filter(year=dd[0],month=dd[1],device_id=device_id).update(device_id=device_id,service='atm',ndv={'sum':sums_ndv,'avg':avgs_ndv,'count':count},nta={'sum':sums_nta,'avg':avgs_nta,'count':count},tmp={'sum':sums_tmp,'avg':avgs_tmp,'count':count},ntp={'sum':sums_ntp,'avg':avgs_ntp,'count':count},nov={'sum':sums_nov,'avg':avgs_nov,'count':count},vl1={'sum':sums_vl1,'avg':avgs_vl1,'count':count},vl2={'sum':sums_vl2,'avg':avgs_vl2,'count':count},vl3={'sum':sums_vl3,'avg':avgs_vl3,'count':count},vl4={'sum':sums_vl4,'avg':avgs_vl4,'count':count},re1={'sum':sums_re1,'avg':avgs_re1,'count':count},re2={'sum':sums_re2,'avg':avgs_re2,'count':count},re3={'sum':sums_re3,'avg':avgs_re3,'count':count},re4={'sum':sums_re4,'avg':avgs_re4,'count':count},hour=dd[3],month=dd[1],year=dd[0],day=dd[2])
+                        yr_data=atm_repo_monthly.objects.filter(year=dd[0],month=dd[1],device_id=device_id).update(device_id=device_id,service='atm',ndv={'sum':sums_ndv,'avg':avgs_ndv,'count':count},nta={'sum':sums_nta,'avg':avgs_nta,'count':count},tmp={'sum':sums_tmp,'avg':avgs_tmp,'count':count},whr={'sum':sums_whr,'avg':avgs_whr,'count':count},ntp={'sum':sums_ntp,'avg':avgs_ntp,'count':count},nov={'sum':sums_nov,'avg':avgs_nov,'count':count},vl1={'sum':sums_vl1,'avg':avgs_vl1,'count':count},vl2={'sum':sums_vl2,'avg':avgs_vl2,'count':count},vl3={'sum':sums_vl3,'avg':avgs_vl3,'count':count},vl4={'sum':sums_vl4,'avg':avgs_vl4,'count':count},re1={'sum':sums_re1,'avg':avgs_re1,'count':count},re2={'sum':sums_re2,'avg':avgs_re2,'count':count},re3={'sum':sums_re3,'avg':avgs_re3,'count':count},re4={'sum':sums_re4,'avg':avgs_re4,'count':count},hour=dd[3],month=dd[1],year=dd[0],day=dd[2])
                     else:
-                        yr_data=atm_repo_monthly.objects.create(device_id=device_id,service='atm',ndv={'sum':sums_ndv,'avg':avgs_ndv,'count':count},nta={'sum':sums_nta,'avg':avgs_nta,'count':count},tmp={'sum':sums_tmp,'avg':avgs_tmp,'count':count},ntp={'sum':sums_ntp,'avg':avgs_ntp,'count':count},nov={'sum':sums_nov,'avg':avgs_nov,'count':count},vl1={'sum':sums_vl1,'avg':avgs_vl1,'count':count},vl2={'sum':sums_vl2,'avg':avgs_vl2,'count':count},vl3={'sum':sums_vl3,'avg':avgs_vl3,'count':count},vl4={'sum':sums_vl4,'avg':avgs_vl4,'count':count},re1={'sum':sums_re1,'avg':avgs_re1,'count':count},re2={'sum':sums_re2,'avg':avgs_re2,'count':count},re3={'sum':sums_re3,'avg':avgs_re3,'count':count},re4={'sum':sums_re4,'avg':avgs_re4,'count':count},hour=dd[3],month=dd[1],year=dd[0],day=dd[2])
+                        yr_data=atm_repo_monthly.objects.create(device_id=device_id,service='atm',ndv={'sum':sums_ndv,'avg':avgs_ndv,'count':count},nta={'sum':sums_nta,'avg':avgs_nta,'count':count},tmp={'sum':sums_tmp,'avg':avgs_tmp,'count':count},whr={'sum':sums_whr,'avg':avgs_whr,'count':count},ntp={'sum':sums_ntp,'avg':avgs_ntp,'count':count},nov={'sum':sums_nov,'avg':avgs_nov,'count':count},vl1={'sum':sums_vl1,'avg':avgs_vl1,'count':count},vl2={'sum':sums_vl2,'avg':avgs_vl2,'count':count},vl3={'sum':sums_vl3,'avg':avgs_vl3,'count':count},vl4={'sum':sums_vl4,'avg':avgs_vl4,'count':count},re1={'sum':sums_re1,'avg':avgs_re1,'count':count},re2={'sum':sums_re2,'avg':avgs_re2,'count':count},re3={'sum':sums_re3,'avg':avgs_re3,'count':count},re4={'sum':sums_re4,'avg':avgs_re4,'count':count},hour=dd[3],month=dd[1],year=dd[0],day=dd[2])
                         yr_data.save()
 
                     #yearly
@@ -7723,6 +7745,7 @@ def on_message(client, userdata, msg):
                     sums_ndv=0
                     sums_nta=0
                     sums_tmp=0
+                    sums_whr=0
                     sums_ntp=0
                     sums_nov=0
                     sums_vl1=0
@@ -7736,6 +7759,7 @@ def on_message(client, userdata, msg):
                     avgs_ndv = 0
                     avgs_nta = 0
                     avgs_tmp = 0
+                    avgs_whr=0
                     avgs_ntp = 0
                     avgs_nov = 0
                     avgs_vl1 = 0
@@ -7753,6 +7777,7 @@ def on_message(client, userdata, msg):
                                 ndv=yr.ndv
                                 nta=yr.nta
                                 tmp=yr.tmp
+                                whr=float(yr.whr)
                                 ntp=yr.ntp
                                 nov=yr.nov
                                 vl1=yr.vl1
@@ -7766,6 +7791,7 @@ def on_message(client, userdata, msg):
                                 sums_ndv=sums_ndv+ndv
                                 sums_nta=sums_nta+nta
                                 sums_tmp=sums_tmp+tmp
+                                sums_whr=sums_whr+whr
                                 sums_ntp=sums_ntp+ntp
                                 sums_nov=sums_nov+nov
                                 sums_vl1=sums_vl1+vl1
@@ -7780,6 +7806,7 @@ def on_message(client, userdata, msg):
                         avgs_ndv=sums_ndv/count
                         avgs_nta=sums_nta/count
                         avgs_tmp=sums_tmp/count
+                        avgs_whr=sums_whr/count
                         avgs_ntp=sums_ntp/count
                         avgs_nov=sums_nov/count
                         avgs_vl1=sums_vl1/count
@@ -7792,9 +7819,9 @@ def on_message(client, userdata, msg):
                         avgs_re4=sums_re4/count
                     hr=atm_repo_yearly.objects.filter(year=dd[0],device_id=device_id)
                     if hr:
-                        yr_data=atm_repo_yearly.objects.filter(year=dd[0],device_id=device_id).update(device_id=device_id,service='atm',ndv={'sum':sums_ndv,'avg':avgs_ndv,'count':count},nta={'sum':sums_nta,'avg':avgs_nta,'count':count},tmp={'sum':sums_tmp,'avg':avgs_tmp,'count':count},ntp={'sum':sums_ntp,'avg':avgs_ntp,'count':count},nov={'sum':sums_nov,'avg':avgs_nov,'count':count},vl1={'sum':sums_vl1,'avg':avgs_vl1,'count':count},vl2={'sum':sums_vl2,'avg':avgs_vl2,'count':count},vl3={'sum':sums_vl3,'avg':avgs_vl3,'count':count},vl4={'sum':sums_vl4,'avg':avgs_vl4,'count':count},re1={'sum':sums_re1,'avg':avgs_re1,'count':count},re2={'sum':sums_re2,'avg':avgs_re2,'count':count},re3={'sum':sums_re3,'avg':avgs_re3,'count':count},re4={'sum':sums_re4,'avg':avgs_re4,'count':count},hour=dd[3],month=dd[1],year=dd[0],day=dd[2])
+                        yr_data=atm_repo_yearly.objects.filter(year=dd[0],device_id=device_id).update(device_id=device_id,service='atm',ndv={'sum':sums_ndv,'avg':avgs_ndv,'count':count},nta={'sum':sums_nta,'avg':avgs_nta,'count':count},tmp={'sum':sums_tmp,'avg':avgs_tmp,'count':count},whr={'sum':sums_whr,'avg':avgs_whr,'count':count},ntp={'sum':sums_ntp,'avg':avgs_ntp,'count':count},nov={'sum':sums_nov,'avg':avgs_nov,'count':count},vl1={'sum':sums_vl1,'avg':avgs_vl1,'count':count},vl2={'sum':sums_vl2,'avg':avgs_vl2,'count':count},vl3={'sum':sums_vl3,'avg':avgs_vl3,'count':count},vl4={'sum':sums_vl4,'avg':avgs_vl4,'count':count},re1={'sum':sums_re1,'avg':avgs_re1,'count':count},re2={'sum':sums_re2,'avg':avgs_re2,'count':count},re3={'sum':sums_re3,'avg':avgs_re3,'count':count},re4={'sum':sums_re4,'avg':avgs_re4,'count':count},hour=dd[3],month=dd[1],year=dd[0],day=dd[2])
                     else:
-                        yr_data=atm_repo_yearly.objects.create(device_id=device_id,service='atm',ndv={'sum':sums_ndv,'avg':avgs_ndv,'count':count},nta={'sum':sums_nta,'avg':avgs_nta,'count':count},tmp={'sum':sums_tmp,'avg':avgs_tmp,'count':count},ntp={'sum':sums_ntp,'avg':avgs_ntp,'count':count},nov={'sum':sums_nov,'avg':avgs_nov,'count':count},vl1={'sum':sums_vl1,'avg':avgs_vl1,'count':count},vl2={'sum':sums_vl2,'avg':avgs_vl2,'count':count},vl3={'sum':sums_vl3,'avg':avgs_vl3,'count':count},vl4={'sum':sums_vl4,'avg':avgs_vl4,'count':count},re1={'sum':sums_re1,'avg':avgs_re1,'count':count},re2={'sum':sums_re2,'avg':avgs_re2,'count':count},re3={'sum':sums_re3,'avg':avgs_re3,'count':count},re4={'sum':sums_re4,'avg':avgs_re4,'count':count},hour=dd[3],month=dd[1],year=dd[0],day=dd[2])
+                        yr_data=atm_repo_yearly.objects.create(device_id=device_id,service='atm',ndv={'sum':sums_ndv,'avg':avgs_ndv,'count':count},nta={'sum':sums_nta,'avg':avgs_nta,'count':count},tmp={'sum':sums_tmp,'avg':avgs_tmp,'count':count},whr={'sum':sums_whr,'avg':avgs_whr,'count':count},ntp={'sum':sums_ntp,'avg':avgs_ntp,'count':count},nov={'sum':sums_nov,'avg':avgs_nov,'count':count},vl1={'sum':sums_vl1,'avg':avgs_vl1,'count':count},vl2={'sum':sums_vl2,'avg':avgs_vl2,'count':count},vl3={'sum':sums_vl3,'avg':avgs_vl3,'count':count},vl4={'sum':sums_vl4,'avg':avgs_vl4,'count':count},re1={'sum':sums_re1,'avg':avgs_re1,'count':count},re2={'sum':sums_re2,'avg':avgs_re2,'count':count},re3={'sum':sums_re3,'avg':avgs_re3,'count':count},re4={'sum':sums_re4,'avg':avgs_re4,'count':count},hour=dd[3],month=dd[1],year=dd[0],day=dd[2])
                         yr_data.save()
 
             except Exception as e:
